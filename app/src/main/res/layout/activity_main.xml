@@ -6,10 +6,10 @@
     android:background="#d8e0e8">
 
     <Button
-        android:id="@+id/force_offline"
+        android:id="@+id/forceoffline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send force offline broadcast"/>
+        android:text="force_offline"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/msg_recycler_view"
@@ -35,4 +35,5 @@
             android:layout_height="wrap_content"
             android:text="@string/Send"/>
     </LinearLayout>
+
 </LinearLayout>

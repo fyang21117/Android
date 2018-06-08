@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+//import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,16 +34,16 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //----------------------force offline----------------------
-        Button forceoffline = findViewById(R.id.force_offline);
-        forceoffline.setOnClickListener(new View.OnClickListener()
+        Button forceOffline = findViewById(R.id.forceoffline);
+        forceOffline.setOnClickListener(new View.OnClickListener()
          {
               @Override
              public void onClick(View v)
               {
                   Intent intent = new Intent("com.example.administrator.qqdemo.FORCE_OFFLINE");// send broadcast
                   sendBroadcast(intent);
+                  Toast.makeText(MainActivity.this," sendBroadcast(Force to offline!)",Toast.LENGTH_SHORT).show();
               }
           });
         //------------------------Msgs------------------------------
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity
         public void onReceive(Context context, Intent intent)
         {
             ConnectivityManager connectionManager =(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo= connectionManager.getActiveNetworkInfo();
+             NetworkInfo networkInfo= connectionManager.getActiveNetworkInfo();
             if(networkInfo !=null && networkInfo.isAvailable())
             { Toast.makeText(context,"network is available",Toast.LENGTH_SHORT).show();}
             else
