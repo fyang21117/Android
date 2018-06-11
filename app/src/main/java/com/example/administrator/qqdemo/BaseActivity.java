@@ -1,5 +1,5 @@
+/*
 package com.example.administrator.qqdemo;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +15,37 @@ import android.widget.Toast;
 public class BaseActivity extends AppCompatActivity
 {
     private ForceOfflineReceiver receiver;
+    @Override
+    protected void onCreate(Bundle saveInstaceState){
+        super.onCreate(saveInstaceState);
+        ActivityCollector.addActivity(this);
+    }
+    @Override
+    protected  void onResume()
+    {
+        super.onResume();
+        IntentFilter intentFilter_force = new IntentFilter();
+        intentFilter_force.addAction("com.example.administrator.qqdemo.FORCE_OFFLINE");//receive broadcast
+        receiver = new ForceOfflineReceiver();
+        registerReceiver(receiver,intentFilter_force);
+        Toast.makeText(BaseActivity.this,"register_ForceOfflineReceiver!",Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected  void onPause()
+    {
+        super.onPause();
+        if(receiver !=null)
+        {
+            unregisterReceiver(receiver);
+            receiver=null;
+        }
+    }
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
     class ForceOfflineReceiver extends BroadcastReceiver
     {
         @Override
@@ -38,39 +69,5 @@ public class BaseActivity extends AppCompatActivity
             builder.show();
         }
     }
-
-    @Override
-    protected void onCreate(Bundle saveInstaceState)
-    {
-        super.onCreate(saveInstaceState);
-        ActivityCollector.addActivity(this);
-    }
-    @Override
-    protected  void onResume()
-    {
-        super.onResume();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.example.administrator.qqdemo.FORCE_OFFLINE");//receive broadcast
-        receiver = new ForceOfflineReceiver();
-        registerReceiver(receiver,intentFilter);
-        Toast.makeText(BaseActivity.this,"receiveBroadcast(Force to offline!)",Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    protected  void onPause()
-    {
-        super.onPause();
-        if(receiver !=null)
-        {
-            unregisterReceiver(receiver);
-            receiver=null;
-        }
-    }
-
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-        ActivityCollector.removeActivity(this);
-    }
-
 }
+*/

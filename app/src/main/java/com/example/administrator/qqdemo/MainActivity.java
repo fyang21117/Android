@@ -1,7 +1,9 @@
 package com.example.administrator.qqdemo;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,26 +29,13 @@ public class MainActivity extends AppCompatActivity
     private Button send;
     private RecyclerView msgRecyclerView;
     private MsgAdapter adapter;
-
-    private IntentFilter intentFilter;
     private NetworkChangeReceiver networkChangeReceiver;
+    private ForceOfflineReceiver forceOfflineReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //----------------------force offline----------------------
-        Button forceOffline = findViewById(R.id.forceoffline);
-        forceOffline.setOnClickListener(new View.OnClickListener()
-         {
-              @Override
-             public void onClick(View v)
-              {
-                  Intent intent = new Intent("com.example.administrator.qqdemo.FORCE_OFFLINE");// send broadcast
-                  sendBroadcast(intent);
-                  Toast.makeText(MainActivity.this," sendBroadcast(Force to offline!)",Toast.LENGTH_SHORT).show();
-              }
-          });
         //------------------------Msgs------------------------------
         initMsgs();
         inputText = findViewById(R.id.input_text);
@@ -71,19 +61,49 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-        //------------network------------------
-        intentFilter = new IntentFilter();
-        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        //----------------------network----------------------
+        IntentFilter intentFilter_network = new IntentFilter();
+        intentFilter_network.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
-        registerReceiver(networkChangeReceiver,intentFilter);
+        registerReceiver(networkChangeReceiver,intentFilter_network);
+        //  Toast.makeText(MainActivity.this,"registerReceiver_NetworkChange!",Toast.LENGTH_SHORT).show();
+
+        //----------------------force offline----------------------
+        Button forceOffline = findViewById(R.id.forceoffline);
+        forceOffline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent("com.example.administrator.qqdemo.FORCE_OFFLINE");// send broadcast
+                sendBroadcast(intent);
+                Toast.makeText(MainActivity.this," sendBroadcast(Force to offline!)",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-    //------------network------------------
-    @Override
-    protected void onDestroy()
+
+    class ForceOfflineReceiver extends BroadcastReceiver
     {
-        super.onDestroy();
-        unregisterReceiver(networkChangeReceiver);
+        @Override
+        public void onReceive(final Context context,Intent intent)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Warning");
+            builder.setMessage("You are forced to be offline.Please try to login again");
+            builder.setCancelable(false);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    ActivityCollector.finishAll();
+                    Intent intent = new Intent(context,LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
+         //   builder.create().getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+            builder.show();
+        }
     }
+    //-------------------------network-------------------------------
     class NetworkChangeReceiver extends BroadcastReceiver
     {
         @Override
@@ -95,10 +115,41 @@ public class MainActivity extends AppCompatActivity
             { Toast.makeText(context,"network is available",Toast.LENGTH_SHORT).show();}
             else
                 Toast.makeText(context,"network is unavailable",Toast.LENGTH_SHORT).show();
-
         }
     }
 
+    @Override
+    protected  void onResume()
+    {
+        super.onResume();
+        //----------------------force_offline----------------------
+        IntentFilter intentFilter_force = new IntentFilter();
+        intentFilter_force.addAction("com.example.administrator.qqdemo.FORCE_OFFLINE");//receive broadcast
+        forceOfflineReceiver = new ForceOfflineReceiver();
+        registerReceiver(forceOfflineReceiver,intentFilter_force);
+        // Toast.makeText(MainActivity.this,"registerReceiver_ForceOffline!",Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected  void onPause()
+    {
+        super.onPause();
+        if(forceOfflineReceiver != null)
+        {
+            unregisterReceiver(forceOfflineReceiver);
+            forceOfflineReceiver = null;
+        }
+    }
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        if(networkChangeReceiver != null)
+        {
+            unregisterReceiver(networkChangeReceiver);
+            networkChangeReceiver = null;
+        }
+       // ActivityCollector.removeActivity(this);
+    }
     private void initMsgs()
     {
         Msg msg1 = new Msg("hello QQdemo.",Msg.TYPE_RECEIVED);
