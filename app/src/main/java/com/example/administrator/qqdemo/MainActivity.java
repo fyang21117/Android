@@ -13,12 +13,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
+//import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +44,16 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        inputText = findViewById(R.id.input_text);
+        String input_Text  = load();
+        if(!TextUtils.isEmpty(input_Text)){
+            inputText.setText(input_Text);
+            inputText.setSelection(input_Text.length());
+            Toast.makeText(this,"Restoring succeeded",Toast.LENGTH_SHORT).show();
+        }
         //------------------------Msgs------------------------------
         initMsgs();
-        inputText = findViewById(R.id.input_text);
         send = findViewById(R.id.send);
         msgRecyclerView = findViewById(R.id.msg_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -149,6 +164,47 @@ public class MainActivity extends AppCompatActivity
             networkChangeReceiver = null;
         }
        // ActivityCollector.removeActivity(this);
+        String input_Text = inputText.getText().toString();
+        save(input_Text);
+    }
+
+    private void save(String input_text)
+    {
+        FileOutputStream out = null;
+        BufferedWriter writer = null;
+        try{
+            out = openFileOutput("DataSavedInFile",Context.MODE_PRIVATE);
+            writer = new BufferedWriter(new OutputStreamWriter(out));
+            writer.write(input_text);
+        }catch (IOException e){e.printStackTrace();}
+        finally {
+            try{
+                if(writer !=null)
+                    writer.close();
+            }catch (IOException e){e.printStackTrace();}
+        }
+    }
+    public String load(){
+        FileInputStream in = null;
+        BufferedReader reader = null;
+        StringBuilder content = new StringBuilder();
+        try{
+            in = openFileInput("DataSavedInFile");
+            reader = new BufferedReader(new InputStreamReader(in));
+            String line = "";
+            while((line = reader.readLine())!= null){
+                content.append(line);
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }finally {
+            if(reader != null){
+                try{
+                    reader.close();
+                }catch (IOException e){e.printStackTrace();}
+            }
+        }
+        return content.toString();
     }
     private void initMsgs()
     {
