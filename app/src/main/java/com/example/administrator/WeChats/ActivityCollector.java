@@ -1,4 +1,4 @@
-package com.example.administrator.qqdemo;
+package com.example.administrator.WeChats;
 
 import android.app.Activity;
 import java.util.ArrayList;

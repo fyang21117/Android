@@ -1,4 +1,4 @@
-package com.example.administrator.qqdemo;
+package com.example.administrator.WeChats;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +30,7 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>
 
     public MsgAdapter(List<Msg> msgList)
     {   mMsgList = msgList;}
+
     @Override
     @NonNull public ViewHolder  onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
@@ -40,7 +41,7 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>
     public void onBindViewHolder(@NonNull ViewHolder holder,int position)
     {
         Msg msg = mMsgList.get(position);
-        if(msg.getType() == Msg.TYPE_RECEIVED)
+        if(msg.getType() == Msg.TYPE_RECEIVED)          //按输入类型显示左右布局
         {
             holder.leftLayout.setVisibility(View.VISIBLE);
             holder.rightLayout.setVisibility(View.GONE);

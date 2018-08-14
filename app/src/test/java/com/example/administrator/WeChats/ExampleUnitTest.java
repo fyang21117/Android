@@ -1,4 +1,4 @@
-package com.example.administrator.qqdemo;
+package com.example.administrator.WeChats;
 
 import org.junit.Test;
 

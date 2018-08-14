@@ -1,4 +1,4 @@
-package com.example.administrator.qqdemo;
+package com.example.administrator.WeChats;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -8,16 +8,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-//import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-//import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -40,12 +41,14 @@ public class MainActivity extends AppCompatActivity
     private NetworkChangeReceiver networkChangeReceiver;
     private ForceOfflineReceiver forceOfflineReceiver;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        inputText = findViewById(R.id.input_text);
+        inputText = findViewById(R.id.input_text );
         String input_Text  = load();
         if(!TextUtils.isEmpty(input_Text)){
             inputText.setText(input_Text);
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity
         msgRecyclerView.setLayoutManager(layoutManager);
         adapter = new MsgAdapter(msgList);
         msgRecyclerView.setAdapter(adapter);
-        send.setOnClickListener(new View.OnClickListener()
+        send.setOnClickListener(new  View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -81,7 +84,6 @@ public class MainActivity extends AppCompatActivity
         intentFilter_network.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
         registerReceiver(networkChangeReceiver,intentFilter_network);
-        //  Toast.makeText(MainActivity.this,"registerReceiver_NetworkChange!",Toast.LENGTH_SHORT).show();
 
         //----------------------force offline----------------------
         Button forceOffline = findViewById(R.id.forceoffline);
@@ -89,11 +91,43 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent("com.example.administrator.qqdemo.FORCE_OFFLINE");// send broadcast
+                Intent intent = new Intent("com.example.administrator.WeChats.FORCE_OFFLINE");// send broadcast
                 sendBroadcast(intent);
                 Toast.makeText(MainActivity.this," sendBroadcast(Force to offline!)",Toast.LENGTH_SHORT).show();
             }
         });
+
+        //----------------------wechat-----------------------------
+        ImageButton WeChat = findViewById(R.id.WeChat);
+        ImageButton Contacts = findViewById(R.id.Contacts);
+        ImageButton Discover = findViewById(R.id.Discover);
+        ImageButton Me  = findViewById(R.id.Me);
+
+        WeChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,"WeChat",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Contacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,"Contacts",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Discover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,"Discover",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Me.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,"Me",Toast.LENGTH_SHORT).show();
+            }
+        });
+        //---------------------------------------------------------
     }
 
     class ForceOfflineReceiver extends BroadcastReceiver
@@ -101,7 +135,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onReceive(final Context context,Intent intent)
         {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);     //创建构建器
             builder.setTitle("Warning");
             builder.setMessage("You are forced to be offline.Please try to login again");
             builder.setCancelable(false);
@@ -139,7 +173,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         //----------------------force_offline----------------------
         IntentFilter intentFilter_force = new IntentFilter();
-        intentFilter_force.addAction("com.example.administrator.qqdemo.FORCE_OFFLINE");//receive broadcast
+        intentFilter_force.addAction("com.example.administrator.WeChats.FORCE_OFFLINE");//receive broadcast
         forceOfflineReceiver = new ForceOfflineReceiver();
         registerReceiver(forceOfflineReceiver,intentFilter_force);
         // Toast.makeText(MainActivity.this,"registerReceiver_ForceOffline!",Toast.LENGTH_SHORT).show();
@@ -208,11 +242,14 @@ public class MainActivity extends AppCompatActivity
     }
     private void initMsgs()
     {
-        Msg msg1 = new Msg("hello QQdemo.",Msg.TYPE_RECEIVED);
-        msgList.add(msg1);
-        Msg msg2 = new Msg("2018/5/26 22:04.",Msg.TYPE_SENT);
-        msgList.add(msg2);
-        Msg msg3 = new Msg("this is 1043 day for us.",Msg.TYPE_RECEIVED);
-        msgList.add(msg3);
+        for(int i=0;i<6;i++) {
+
+            Msg msg1 = new Msg("hello QQdemo.", Msg.TYPE_RECEIVED);
+            msgList.add(msg1);
+            Msg msg2 = new Msg("2018/5/26 22:04.", Msg.TYPE_SENT);
+            msgList.add(msg2);
+            Msg msg3 = new Msg("this is 1043 day for us.", Msg.TYPE_RECEIVED);
+            msgList.add(msg3);
+        }
     }
 }

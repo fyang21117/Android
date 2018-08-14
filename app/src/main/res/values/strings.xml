@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">QQdemo</string>
+    <string name="app_name">WeChats</string>
     <string name="Account">Account</string>
     <string name="Password">Password</string>
     <string name="Login">Login</string>
     <string name="Send">Send</string>
+    <string name="Receive">Receive</string>
+    <string name="WeChat">WeChat</string>
+    <string name="Contacts">Contacts</string>
+    <string name="Discover">Discover</string>
+    <string name="Me">Me</string>
 </resources>

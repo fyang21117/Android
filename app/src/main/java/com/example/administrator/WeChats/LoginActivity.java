@@ -1,4 +1,4 @@
-package com.example.administrator.qqdemo;
+package com.example.administrator.WeChats;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +23,7 @@ public class LoginActivity extends MainActivity
     {
         super.onCreate(savedInstaceState);
         setContentView(R.layout.activity_login);
+
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         accountEdit = findViewById(R.id.account);
         passwordEdit = findViewById(R.id.password);
@@ -55,7 +56,8 @@ public class LoginActivity extends MainActivity
                     startActivity(intent);
                     finish();
                 }
-                else { Toast.makeText(LoginActivity.this,"account or password is invalid",Toast.LENGTH_SHORT).show(); }
+                else
+                    { Toast.makeText(LoginActivity.this,"account or password is invalid",Toast.LENGTH_SHORT).show(); }
             }
         });
     }
