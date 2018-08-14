@@ -13,10 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         
-        <activity android:name="com.example.administrator.WeChats.MainActivity">
-        </activity>
-<!--        <activity android:name=".BaseActivity">
-        </activity>-->
+        <activity android:name="com.example.administrator.WeChats.MeActivity"></activity>
+        <activity android:name=".HomepageActivity"></activity>
+        <activity android:name=".ChatActivity"></activity>
 
         <activity android:name="com.example.administrator.WeChats.LoginActivity">
             <intent-filter>
