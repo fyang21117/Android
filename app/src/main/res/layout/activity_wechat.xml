@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/menu_listview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top">
+    </ListView>
+
+    <fragment
+        android:id="@+id/fragment_wechat"
+        android:name="com.example.administrator.WeChats.FragmentWeChat"
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="1" />
+    <fragment
+        android:id="@+id/fragment_contacts"
+        android:name="com.example.administrator.WeChats.FragmentContacts"
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="1" />
+    <fragment
+        android:id="@+id/fragment_discover"
+        android:name="com.example.administrator.WeChats.FragmentDiscover"
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="1" />
+    <fragment
+        android:id="@+id/fragment_me"
+        android:name="com.example.administrator.WeChats.FragmentMe"
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="1" />
+
+    <com.example.administrator.WeChats.ViewIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </com.example.administrator.WeChats.ViewIndicator>
+
+</LinearLayout>

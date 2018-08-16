@@ -17,14 +17,14 @@ import android.widget.Toast;
 
 public class LoginActivity extends MeActivity
 {
-    private SharedPreferences pref;
-    private  SharedPreferences.Editor editor;
+    private SharedPreferences pref;                     //following
+    private SharedPreferences.Editor editor;
     private CheckBox rememberPass;
     private EditText accountEdit;
     private EditText passwordEdit;
     private Button login;
-    Boolean network_status;
     private NetworkChangeReceiver networkChangeReceiver;
+    Boolean network_status;
 
     @Override
     protected  void onCreate(Bundle savedInstaceState)
@@ -37,7 +37,6 @@ public class LoginActivity extends MeActivity
         networkChangeReceiver = new NetworkChangeReceiver();
         registerReceiver(networkChangeReceiver,intentFilter_network);
 
-
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         accountEdit = findViewById(R.id.account);
         passwordEdit = findViewById(R.id.password);
@@ -46,7 +45,7 @@ public class LoginActivity extends MeActivity
         boolean isRemember = pref.getBoolean("remember_password",false);
         if(isRemember){     //true
             String account = pref.getString("account","");
-            String password = pref.getString("password","");
+            String password = pref.getString("password","");        //读取键值对
             accountEdit.setText(account);
             passwordEdit.setText(password);
             rememberPass.setChecked(true);
@@ -60,14 +59,14 @@ public class LoginActivity extends MeActivity
                     editor = pref.edit();
                     if(rememberPass.isChecked()){   //if checked,display account and passwd
                         editor.putBoolean("remember_password",true);
-                        editor.putString("account",account);
+                        editor.putString("account",account);                    //存储键值对
                         editor.putString("password",password);
                     }else
-                    {    editor.clear();   }
+                         {    editor.clear();   }
                     editor.apply();
 
-                    Intent intent = new Intent(LoginActivity.this,HomepageActivity.class);
-                    startActivity(intent);
+                    Intent i = new Intent(LoginActivity.this,WeChatActivity.class);
+                    startActivity(i);
                     finish();
                 }
                 else if(!network_status)
@@ -77,7 +76,6 @@ public class LoginActivity extends MeActivity
             }
         });
     }
-
     //-------------------------network-------------------------------
     class NetworkChangeReceiver extends BroadcastReceiver
     {
@@ -86,10 +84,11 @@ public class LoginActivity extends MeActivity
         {
             ConnectivityManager connectionManager =(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo= connectionManager.getActiveNetworkInfo();
-            if(network_status=(networkInfo !=null && networkInfo.isAvailable()))
-            { Toast.makeText(context,"network is available",Toast.LENGTH_SHORT).show();}
-            else
-                Toast.makeText(context,"network is unavailable",Toast.LENGTH_SHORT).show();
+            network_status=(networkInfo !=null && networkInfo.isAvailable());
+//            if()
+//                { Toast.makeText(context,"network is available",Toast.LENGTH_SHORT).show();}
+//            else
+//                Toast.makeText(context,"network is unavailable",Toast.LENGTH_SHORT).show();
         }
     }
     @Override
@@ -102,5 +101,4 @@ public class LoginActivity extends MeActivity
             networkChangeReceiver = null;
         }// ActivityCollector.removeActivity(this);
     }
-
 }

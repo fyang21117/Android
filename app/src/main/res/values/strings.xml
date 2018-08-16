@@ -13,4 +13,8 @@
     <string name="Contacts">Contacts</string>
     <string name="Discover">Discover</string>
     <string name="Me">Me</string>
+    <string name="tab_item_home">"微信"</string>
+    <string name="tab_item_category">"通讯录"</string>
+    <string name="tab_item_down">"发现"</string>
+    <string name="tab_item_user">"我"</string>
 </resources>

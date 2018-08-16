@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -34,9 +33,9 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstaceState) {
         super.onCreate(savedInstaceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_talk);
 
-        ActionBar actionBar=getSupportActionBar();
+        ActionBar actionBar=getSupportActionBar();          //隐藏标题
         if(actionBar !=null)    {   actionBar.hide(); }
 
         inputText = findViewById(R.id.input_text);
@@ -51,9 +50,9 @@ public class ChatActivity extends AppCompatActivity {
         send = findViewById(R.id.send);
         msgRecyclerView = findViewById(R.id.msg_recycler_view);
         LinearLayoutManager chat_layoutManager = new LinearLayoutManager(ChatActivity.this);
-        msgRecyclerView.setLayoutManager(chat_layoutManager);
+            msgRecyclerView.setLayoutManager(chat_layoutManager);
         chat_adapter = new MsgAdapter(msgList);
-        msgRecyclerView.setAdapter(chat_adapter);
+            msgRecyclerView.setAdapter(chat_adapter);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +70,7 @@ public class ChatActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i3 = new Intent(ChatActivity.this,HomepageActivity.class);
+                Intent i3 = new Intent(ChatActivity.this,WeChatActivity.class);
                 startActivity(i3);
                 finish();
             }

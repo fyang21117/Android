@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,9 @@ public class MeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_me);
+        ActionBar actionBar=getSupportActionBar();          //隐藏标题
+        if(actionBar !=null)    {   actionBar.hide(); }
+
         //----------------------force offline----------------------
         Button forceOffline = findViewById(R.id.forceoffline);
         forceOffline.setOnClickListener(new View.OnClickListener() {
@@ -28,6 +32,15 @@ public class MeActivity extends AppCompatActivity
                 Intent intent = new Intent("com.example.administrator.WeChats.FORCE_OFFLINE");// send broadcast
                 sendBroadcast(intent);
                 Toast.makeText(MeActivity.this," sendBroadcast(Force to offline!)",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button back = findViewById(R.id.title_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i4 = new Intent(MeActivity.this,WeChatActivity.class);
+                startActivity(i4);
+                finish();
             }
         });
     }
@@ -49,8 +62,7 @@ public class MeActivity extends AppCompatActivity
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }
-            });
-         //   builder.create().getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+            });//builder.create().getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             builder.show();
         }
     }

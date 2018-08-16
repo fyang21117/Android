@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:background="#d8e0e8">
 
+    <include layout="@layout/chat_title" />
+
     <Button
         android:id="@+id/forceoffline"
         android:layout_width="wrap_content"

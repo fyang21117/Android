@@ -1,14 +1,12 @@
 package com.example.administrator.WeChats;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.List;
 
 public class ChatsAdapter extends ArrayAdapter<Chats>
@@ -21,7 +19,7 @@ public class ChatsAdapter extends ArrayAdapter<Chats>
     }
 
     @Override
-    public View getView(int position,View convertView,ViewGroup parent)
+    public View getView(int position,View convertView,ViewGroup parent)             //重写方法
     {
         Chats chats = getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
