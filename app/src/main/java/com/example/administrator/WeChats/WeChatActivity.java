@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,17 +59,31 @@ public class WeChatActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1])
                         .hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
 
-                if(which == 1)
+                if(which == 0)
                 {
-                Intent i1 = new Intent(WeChatActivity.this,ChatActivity.class);
-                startActivity(i1);
-                finish();
+//                    initChats();
+//                    ListView menuView = findViewById(R.id.menu_listview);           //定义初始化
+//                    ChatsAdapter chatsAdapter = new ChatsAdapter(WeChatActivity.this,R.layout.chats_item,chatsList);//应用，获取资源，//activity_homepage崩溃
+//                    menuView.setAdapter(chatsAdapter);
+                    Toast.makeText(WeChatActivity.this, "wechat", Toast.LENGTH_SHORT).show();
+                }
+                if(which == 1)
+                {Toast.makeText(WeChatActivity.this, "contacts", Toast.LENGTH_SHORT).show();
+                    Intent i1 = new Intent(WeChatActivity.this,ChatActivity.class);
+                    startActivity(i1);
+                    finish();
+                }
+                if(which == 2)
+                {Toast.makeText(WeChatActivity.this, "discover", Toast.LENGTH_SHORT).show();
+                    Intent i2 = new Intent(WeChatActivity.this,DiscoverActivity.class);
+                    startActivity(i2);
+//                    finish();
                 }
                 if(which == 3)
-                {
-                Intent i2 = new Intent(WeChatActivity.this,MeActivity.class);
-                startActivity(i2);
-                finish();
+                {Toast.makeText(WeChatActivity.this, "me", Toast.LENGTH_SHORT).show();
+                    Intent i3 = new Intent(WeChatActivity.this,MeActivity.class);
+                    startActivity(i3);
+                    finish();
                 }
             }
         });
