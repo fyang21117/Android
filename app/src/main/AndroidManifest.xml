@@ -2,10 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.administrator.WeChats">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -14,30 +15,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        
-        <activity android:name="com.example.administrator.WeChats.MeActivity"></activity>
-        <activity android:name=".WeChatActivity"></activity>
-        <activity android:name=".ChatActivity"></activity>
-        <activity android:name=".DiscoverActivity"></activity>
-
-        <activity android:name="com.example.administrator.WeChats.LoginActivity">
+        <activity android:name=".MeActivity" />
+        <activity android:name=".WeChatActivity" />
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".DiscoverActivity" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <!--<action android:name="com.example.administrator.qqdemo.FORCE_OFFLINE"/>-->
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <!-- <action android:name="com.example.administrator.qqdemo.FORCE_OFFLINE"/> -->
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <provider
-            android:authorities="com.example.administrator.wechats.fileprovider"
             android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.administrator.wechats.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths">
-            </meta-data>
+                android:resource="@xml/file_paths"></meta-data>
         </provider>
 
+        <activity android:name=".ContactsActivity"></activity>
     </application>
+
 </manifest>

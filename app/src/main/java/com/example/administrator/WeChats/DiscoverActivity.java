@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +32,7 @@ public class DiscoverActivity extends AppCompatActivity {
     private Uri imageUri;
     private static final int TAKE_PHOTO =1;
     private static final int SELECT_PHOTO =2;
-
+    public static Fragment[] mFragments;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -41,6 +42,7 @@ public class DiscoverActivity extends AppCompatActivity {
         Button selectPhoto = findViewById(R.id.select_photo);
         photo = findViewById(R.id.photo);
 
+        setFragmentIndicator(2);
         takePhoto.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v)
@@ -92,7 +94,6 @@ public class DiscoverActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults)
     {                                       //弹框请求权限
-//        super.onRequestPermissionsResult(requestCode,permissions,grantResults);
         switch(requestCode)
         {
             case 1:if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
@@ -107,8 +108,6 @@ public class DiscoverActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode,int resultCode,Intent data)
     {
-        //super.onActivityResult(requestCode,resultCode,data);
-
         switch (requestCode)
         {
             case TAKE_PHOTO:
@@ -190,5 +189,47 @@ public class DiscoverActivity extends AppCompatActivity {
         }else{
             Toast.makeText(this,"failed to get image",Toast.LENGTH_SHORT).show();
         }
+    }
+    private void setFragmentIndicator(int whichIsDefault) {     //初始化fragment
+        mFragments = new Fragment[4];
+        mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
+        mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
+        mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
+        mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
+
+        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1])      //显示默认的Fragment
+                .hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
+
+        ViewIndicator mIndicator =  findViewById(R.id.indicator);//绑定自定义的菜单栏组件
+        ViewIndicator.setIndicator(whichIsDefault);
+        mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
+            @Override
+            public void onIndicate(View v, int which) {
+                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1])
+                        .hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
+                switch (which) {
+                    case 0:
+                        Toast.makeText(DiscoverActivity.this, "wechat", Toast.LENGTH_SHORT).show();
+                        Intent i0 = new Intent(DiscoverActivity.this, WeChatActivity.class);
+                        i0.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(i0);
+                        break;
+                    case 1:
+                        Toast.makeText(DiscoverActivity.this, "contacts", Toast.LENGTH_SHORT).show();
+                        Intent i1 = new Intent(DiscoverActivity.this, ContactsActivity.class);
+                        i1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(i1);
+                        break;
+                    case 2: break;
+                    case 3:
+                        Toast.makeText(DiscoverActivity.this, "me", Toast.LENGTH_SHORT).show();
+                        Intent i3 = new Intent(DiscoverActivity.this, MeActivity.class);
+                        i3.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(i3);
+                        break;
+                }
+
+            }
+        });
     }
 }

@@ -18,15 +18,15 @@ public class ChatsAdapter extends ArrayAdapter<Chats>
         resourceId = textViewResourceId;
     }
 
-    @Override
-    public View getView(int position,View convertView,ViewGroup parent)             //重写方法
-    {
-        Chats chats = getItem(position);
-        View view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
-        ImageView chatsImage = view.findViewById(R.id.chats_image);
-        TextView chatsName = view.findViewById(R.id.chats_name);
-        chatsImage.setImageResource(chats.getImageId());
-        chatsName.setText(chats.getName());
-        return view;
-    }
+//    @Override
+//    public View getView(int position,View convertView,ViewGroup parent)             //重写方法
+//    {
+//        Chats chats = getItem(position);
+////        View view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
+////        ImageView chatsImage = view.findViewById(R.id.chats_image);
+////        TextView chatsName = view.findViewById(R.id.chats_name);
+////        chatsImage.setImageResource(chats.getImageId());
+////        chatsName.setText(chats.getName());
+//        return view;
+//    }
 }

@@ -5,17 +5,21 @@
     android:layout_height="match_parent">
 
     <ListView
-        android:id="@+id/talk_view"
+        android:id="@+id/contacts_view"
         android:layout_width="wrap_content"
         android:layout_height="460dp"
         android:layout_gravity="top">
     </ListView>
 
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <fragment
         android:id="@+id/fragment_wechat"
         android:name="com.example.administrator.WeChats.FragmentWeChat"
         android:layout_width="match_parent"
-        android:layout_height="0sp"
+        android:layout_height="wrap_content"
         android:layout_weight="1" />
     <fragment
         android:id="@+id/fragment_contacts"
@@ -41,5 +45,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </com.example.administrator.WeChats.ViewIndicator>
+    </LinearLayout>
 
 </LinearLayout>
