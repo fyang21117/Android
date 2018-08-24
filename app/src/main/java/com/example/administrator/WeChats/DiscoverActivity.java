@@ -27,7 +27,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class DiscoverActivity extends AppCompatActivity {
+public class DiscoverActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView photo;
     private Uri imageUri;
     private static final int TAKE_PHOTO =1;
@@ -38,57 +38,64 @@ public class DiscoverActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
+        setFragmentIndicator(2);
+
         Button takePhoto = findViewById(R.id.take_photo);
         Button selectPhoto = findViewById(R.id.select_photo);
         photo = findViewById(R.id.photo);
 
-        setFragmentIndicator(2);
-        takePhoto.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v)
-            {
-                File outputImage = new File(getExternalCacheDir(),"output_image.jpg");
-                try{
-                    if(outputImage.exists())
-                        {   outputImage.delete();   }
-                     outputImage.createNewFile();
-                    }catch (IOException e)
-                        {   e.printStackTrace();    }
-                if(Build.VERSION.SDK_INT >=24)
+        takePhoto.setOnClickListener(this);
+        selectPhoto.setOnClickListener(this);
+        photo.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId()) {
+            case R.id.take_photo:
                 {
-                    imageUri = FileProvider.getUriForFile(DiscoverActivity.this,
-                            "com.example.administrator.WeChats.fileprovider",outputImage);
-                }else
-                    {   imageUri = Uri.fromFile(outputImage);    }
-
-                //打开相机
-                Intent i5 = new Intent("android.media.action.IMAGE_CAPTURE");
-                i5.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
-                startActivityForResult(i5,TAKE_PHOTO);
-            }
-        });
-
-        selectPhoto.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                if(ContextCompat.checkSelfPermission(DiscoverActivity.this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                {                                                                   //动态申请对sd卡读写能力
-                    ActivityCompat.requestPermissions(DiscoverActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+                File outputImage = new File(getExternalCacheDir(), "output_image.jpg");
+                try {
+                    if (outputImage.exists()) {
+                        outputImage.delete();
+                    }
+                    outputImage.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                else
-                    {   openAlbum();    }
-            }
-        });
+                if (Build.VERSION.SDK_INT >= 24) {
+                    imageUri = FileProvider.getUriForFile(DiscoverActivity.this,
+                            "com.example.administrator.WeChats.fileprovider", outputImage);
+                } else {
+                    imageUri = Uri.fromFile(outputImage);
+                }
+                //打开相机
+                Intent open_camera = new Intent("android.media.action.IMAGE_CAPTURE");
+                open_camera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(open_camera, TAKE_PHOTO);
+            }break;
+
+            case R.id.select_photo: {
+                if (ContextCompat.checkSelfPermission(DiscoverActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {                                                                   //动态申请对sd卡读写能力
+                    ActivityCompat.requestPermissions(DiscoverActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 3);
+                } else {
+                    openAlbum();
+                }
+            }break;
+
+            case R.id.photo: {
+                Toast.makeText(DiscoverActivity.this, "the photo is clicked", Toast.LENGTH_SHORT).show();
+            }break;
+            default :break;
+        }
     }
 
     private void openAlbum()                //打开相册
     {
-        Intent i6 = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);//"android.intent.action.GET_CONTNET"
-        i6.setType("image/*");
-        startActivityForResult(i6,SELECT_PHOTO);
+        Intent open_album = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);//"android.intent.action.GET_CONTNET"
+        open_album.setType("image/*");
+        startActivityForResult(open_album,SELECT_PHOTO);
     }
 
     @Override
@@ -96,7 +103,7 @@ public class DiscoverActivity extends AppCompatActivity {
     {                                       //弹框请求权限
         switch(requestCode)
         {
-            case 1:if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
+            case 3:if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
                         {   openAlbum();    }
                     else
                          {    Toast.makeText(this,"you denied the permission",Toast.LENGTH_SHORT).show();}
@@ -157,7 +164,7 @@ public class DiscoverActivity extends AppCompatActivity {
                 imagePath = getImagePath(uri,null);
         else if ("file".equalsIgnoreCase(uri.getScheme()))
                 imagePath = uri.getPath();
-            displayImage(imagePath);
+         displayImage(imagePath);
     }
 
     private void handleImageBeforeKitKat(Intent data)               //图片真实的URI
@@ -190,23 +197,23 @@ public class DiscoverActivity extends AppCompatActivity {
             Toast.makeText(this,"failed to get image",Toast.LENGTH_SHORT).show();
         }
     }
-    private void setFragmentIndicator(int whichIsDefault) {     //初始化fragment
+    private void setFragmentIndicator(int whichIsDefault) {
         mFragments = new Fragment[4];
         mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
         mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
         mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
         mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
 
-        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1])      //显示默认的Fragment
-                .hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
+        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
+                .show(mFragments[whichIsDefault]).commit();
 
-        ViewIndicator mIndicator =  findViewById(R.id.indicator);//绑定自定义的菜单栏组件
+        ViewIndicator mIndicator =  findViewById(R.id.indicator);
         ViewIndicator.setIndicator(whichIsDefault);
         mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
             @Override
             public void onIndicate(View v, int which) {
-                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1])
-                        .hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
+                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
+                        .show(mFragments[which]).commit();
                 switch (which) {
                     case 0:
                         Toast.makeText(DiscoverActivity.this, "wechat", Toast.LENGTH_SHORT).show();

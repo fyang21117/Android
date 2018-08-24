@@ -16,13 +16,15 @@
         android:text="select photo"/>
     <ImageView
         android:id="@+id/photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxWidth="50dp"
-        android:maxHeight="60dp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:gravity="center_horizontal"/>
 
-
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <fragment
             android:id="@+id/fragment_wechat"
             android:name="com.example.administrator.WeChats.FragmentWeChat"
@@ -50,8 +52,11 @@
 
         <com.example.administrator.WeChats.ViewIndicator
             android:id="@+id/indicator"
+            android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </com.example.administrator.WeChats.ViewIndicator>
+    </LinearLayout>
+
 
 </LinearLayout>

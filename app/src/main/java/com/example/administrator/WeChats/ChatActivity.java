@@ -22,7 +22,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements View.OnClickListener{
 
     private List<Msg> msgList = new ArrayList<>();
     private EditText inputText;
@@ -47,43 +47,53 @@ public class ChatActivity extends AppCompatActivity {
         }
         //------------------------Msgs------------------------------
         initMsgs();
-        send = findViewById(R.id.send);
         msgRecyclerView = findViewById(R.id.msg_recycler_view);
         LinearLayoutManager chat_layoutManager = new LinearLayoutManager(ChatActivity.this);
-            msgRecyclerView.setLayoutManager(chat_layoutManager);
         chat_adapter = new MsgAdapter(msgList);
-            msgRecyclerView.setAdapter(chat_adapter);
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String content = inputText.getText().toString();
-                if (!"".equals(content)) {
-                    Msg msg = new Msg(content, Msg.TYPE_SENT);
-                    msgList.add(msg);
-                    chat_adapter.notifyItemInserted(msgList.size() - 1);
-                    msgRecyclerView.scrollToPosition(msgList.size() - 1);
-                    inputText.setText("");
-                }
-            }
-        });
+
+        msgRecyclerView.setLayoutManager(chat_layoutManager);
+        msgRecyclerView.setAdapter(chat_adapter);
+
+        send = findViewById(R.id.send);
         back=findViewById(R.id.title_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i3 = new Intent(ChatActivity.this,WeChatActivity.class);
-                startActivity(i3);
-                finish();
-            }
-        });
         edit=findViewById(R.id.title_edit);
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ChatActivity.this,"nothing to edit yet",Toast.LENGTH_SHORT).show();
-            }
-        });
+
+        send.setOnClickListener(this);
+        back.setOnClickListener(this);
+        edit.setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(View v)
+    {
+        switch(v.getId())
+        {
+            case R.id.send:
+                {
+                    String content = inputText.getText().toString();
+                    if (!"".equals(content)) {
+                        Msg msg = new Msg(content, Msg.TYPE_SENT);
+                        msgList.add(msg);
+                        chat_adapter.notifyItemInserted(msgList.size() - 1);
+                        msgRecyclerView.scrollToPosition(msgList.size() - 1);
+                        inputText.setText("");
+                    }
+                }break;
+
+            case R.id.title_back:
+                {
+                    Intent i3 = new Intent(ChatActivity.this,WeChatActivity.class);
+                    startActivity(i3);
+                    finish();
+                }break;
+
+            case R.id.title_edit:
+                {
+                    Toast.makeText(ChatActivity.this,"nothing to edit yet",Toast.LENGTH_SHORT).show();
+                }break;
+            default:break;
+        }
+    }
     private void initMsgs()
     {
         for(int i=0;i<6;i++) {
@@ -112,12 +122,15 @@ public class ChatActivity extends AppCompatActivity {
             out = openFileOutput("DataSavedInFile", Context.MODE_PRIVATE);
             writer = new BufferedWriter(new OutputStreamWriter(out));
             writer.write(input_text);
-        }catch (IOException e){e.printStackTrace();}
-        finally {
+        }catch (IOException e)  {
+            e.printStackTrace();
+        } finally {
             try{
                 if(writer !=null)
                     writer.close();
-            }catch (IOException e){e.printStackTrace();}
+            }catch (IOException e){
+                e.printStackTrace();
+            }
         }
     }
 

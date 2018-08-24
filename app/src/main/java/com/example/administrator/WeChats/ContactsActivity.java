@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,18 +23,23 @@ public class ContactsActivity extends AppCompatActivity {
     ArrayAdapter<String> contacts_adapter;
     private List<String> contactsList=new ArrayList<>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
-
         setFragmentIndicator(1);
+
         ListView ContactsView = findViewById(R.id.contacts_view);
-        contacts_adapter = new ArrayAdapter<>(ContactsActivity.this, android.R.layout.simple_list_item_1, contactsList);
-        ContactsView.setAdapter(contacts_adapter);
-        if (ContextCompat.checkSelfPermission(ContactsActivity.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(ContactsActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 2);
+        contacts_adapter = new ArrayAdapter<>(ContactsActivity.this,
+                android.R.layout.simple_list_item_1, contactsList);
+            ContactsView.setAdapter(contacts_adapter);
+
+        if (ContextCompat.checkSelfPermission(ContactsActivity.this,
+                Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(ContactsActivity.this,
+                    new String[]{Manifest.permission.READ_CONTACTS}, 2);
+        }
         else readContacts();
 
         ContactsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,12 +63,9 @@ public class ContactsActivity extends AppCompatActivity {
                     contactsList.add(displayName  + number+ "\n");
                 }contacts_adapter.notifyDataSetChanged();
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        finally {
-            if(cursor!=null)
-                cursor.close();
+        }catch (Exception e)    { e.printStackTrace(); }
+        finally { if(cursor!=null)
+                     cursor.close();
         }
     }
 
@@ -81,23 +82,23 @@ public class ContactsActivity extends AppCompatActivity {
         }
     }
 
-    private void setFragmentIndicator(int whichIsDefault) {     //初始化fragment
+    public void setFragmentIndicator(int whichIsDefault) {
         mFragments = new Fragment[4];
         mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
         mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
         mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
         mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
 
-        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1])      //显示默认的Fragment
-                .hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
+        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
+                .show(mFragments[whichIsDefault]).commit();
 
-        ViewIndicator mIndicator =  findViewById(R.id.indicator);//绑定自定义的菜单栏组件
+        ViewIndicator mIndicator =  findViewById(R.id.indicator);
         ViewIndicator.setIndicator(whichIsDefault);
         mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
             @Override
             public void onIndicate(View v, int which) {
-                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1])
-                        .hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
+                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
+                        .show(mFragments[which]).commit();
                 switch (which) {
                     case 0:
                         Toast.makeText(ContactsActivity.this, "wechat", Toast.LENGTH_SHORT).show();
@@ -119,7 +120,6 @@ public class ContactsActivity extends AppCompatActivity {
                         startActivity(i3);
                         break;
                 }
-
             }
         });
     }

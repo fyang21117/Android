@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MeActivity extends AppCompatActivity
+public class MeActivity extends AppCompatActivity implements View.OnClickListener
 {
     private ForceOfflineReceiver forceOfflineReceiver;
     public static Fragment[] mFragments;
@@ -29,24 +29,31 @@ public class MeActivity extends AppCompatActivity
 
         //----------------------force offline----------------------
         Button forceOffline = findViewById(R.id.forceoffline);
-        forceOffline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
+        Button back = findViewById(R.id.title_back);
+        forceOffline.setOnClickListener(this);
+        back.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.forceoffline:
+                {
                 Intent intent = new Intent("com.example.administrator.WeChats.FORCE_OFFLINE");// send broadcast
                 sendBroadcast(intent);
                 Toast.makeText(MeActivity.this," sendBroadcast(Force to offline!)",Toast.LENGTH_SHORT).show();
-            }
-        });
-        Button back = findViewById(R.id.title_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                }break;
+
+            case R.id.title_back:
+                {
                 Intent i4 = new Intent(MeActivity.this,WeChatActivity.class);
                 startActivity(i4);
                 finish();
-            }
-        });
+                }break;
+            default:break;
+        }
     }
 
     class ForceOfflineReceiver extends BroadcastReceiver
