@@ -16,6 +16,7 @@ public class ViewIndicator extends LinearLayout implements View.OnClickListener 
         private static int mCurIndicator;                           // 当前选定View
         private static View[] mIndicators;                          // View集合
         private OnIndicateListener mOnIndicateListener;             // 对应的监听器
+
         private static final String TAG_ICON_0 = "icon_tag_0";      //// 对应的图标Tag
         private static final String TAG_ICON_1 = "icon_tag_1";
         private static final String TAG_ICON_2 = "icon_tag_2";
@@ -177,28 +178,24 @@ textTag文字标签
                         if (mCurIndicator != 0) {
                             mOnIndicateListener.onIndicate(v, 0);
                             setIndicator(0);
-
                         }
                         break;
                     case 1:
                         if (mCurIndicator != 1) {
                             mOnIndicateListener.onIndicate(v, 1);
                             setIndicator(1);
-
                         }
                         break;
                     case 2:
                         if (mCurIndicator != 2) {
                             mOnIndicateListener.onIndicate(v, 2);
                             setIndicator(2);
-
                         }
                         break;
                     case 3:
                         if (mCurIndicator != 3) {
                             mOnIndicateListener.onIndicate(v, 3);
                             setIndicator(3);
-
                         }
                         break;
                     default:

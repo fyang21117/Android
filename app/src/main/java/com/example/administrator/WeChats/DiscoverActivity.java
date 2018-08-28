@@ -32,13 +32,16 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
     private Uri imageUri;
     private static final int TAKE_PHOTO =1;
     private static final int SELECT_PHOTO =2;
-    public static Fragment[] mFragments;
+//    public static Fragment[] mFragments;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
-        setFragmentIndicator(2);
+
+//        setFragmentIndicator(2);
+        FragmentIndicator discover_fragment=new FragmentIndicator();
+        discover_fragment.setFragmentIndicator(DiscoverActivity.this,2);
 
         Button takePhoto = findViewById(R.id.take_photo);
         Button selectPhoto = findViewById(R.id.select_photo);
@@ -76,17 +79,19 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
                 startActivityForResult(open_camera, TAKE_PHOTO);
             }break;
 
-            case R.id.select_photo: {
+            case R.id.select_photo:
+                {
                 if (ContextCompat.checkSelfPermission(DiscoverActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {                                                                   //动态申请对sd卡读写能力
                     ActivityCompat.requestPermissions(DiscoverActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 3);
                 } else {
                     openAlbum();
                 }
-            }break;
+                }break;
 
-            case R.id.photo: {
+            case R.id.photo:
+                {
                 Toast.makeText(DiscoverActivity.this, "the photo is clicked", Toast.LENGTH_SHORT).show();
-            }break;
+                }break;
             default :break;
         }
     }
@@ -167,7 +172,7 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
          displayImage(imagePath);
     }
 
-    private void handleImageBeforeKitKat(Intent data)               //图片真实的URI
+    private void handleImageBeforeKitKat(Intent data)        //图片真实的URI
     {
         Uri uri = data.getData();
         String imagePath = getImagePath(uri,null);
@@ -197,46 +202,47 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this,"failed to get image",Toast.LENGTH_SHORT).show();
         }
     }
-    private void setFragmentIndicator(int whichIsDefault) {
-        mFragments = new Fragment[4];
-        mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
-        mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
-        mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
-        mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
 
-        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
-                .show(mFragments[whichIsDefault]).commit();
-
-        ViewIndicator mIndicator =  findViewById(R.id.indicator);
-        ViewIndicator.setIndicator(whichIsDefault);
-        mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
-            @Override
-            public void onIndicate(View v, int which) {
-                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
-                        .show(mFragments[which]).commit();
-                switch (which) {
-                    case 0:
-                        Toast.makeText(DiscoverActivity.this, "wechat", Toast.LENGTH_SHORT).show();
-                        Intent i0 = new Intent(DiscoverActivity.this, WeChatActivity.class);
-                        i0.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i0);
-                        break;
-                    case 1:
-                        Toast.makeText(DiscoverActivity.this, "contacts", Toast.LENGTH_SHORT).show();
-                        Intent i1 = new Intent(DiscoverActivity.this, ContactsActivity.class);
-                        i1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i1);
-                        break;
-                    case 2: break;
-                    case 3:
-                        Toast.makeText(DiscoverActivity.this, "me", Toast.LENGTH_SHORT).show();
-                        Intent i3 = new Intent(DiscoverActivity.this, MeActivity.class);
-                        i3.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i3);
-                        break;
-                }
-
-            }
-        });
-    }
+//    private void setFragmentIndicator(int whichIsDefault) {
+//        mFragments = new Fragment[4];
+//        mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
+//        mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
+//        mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
+//        mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
+//
+//        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
+//                .show(mFragments[whichIsDefault]).commit();
+//
+//        ViewIndicator mIndicator =  findViewById(R.id.indicator);
+//        ViewIndicator.setIndicator(whichIsDefault);
+//        mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
+//            @Override
+//            public void onIndicate(View v, int which) {
+//                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
+//                        .show(mFragments[which]).commit();
+//                switch (which) {
+//                    case 0:
+//                        Toast.makeText(DiscoverActivity.this, "wechat", Toast.LENGTH_SHORT).show();
+//                        Intent i0 = new Intent(DiscoverActivity.this, WeChatActivity.class);
+//                        i0.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        startActivity(i0);
+//                        break;
+//                    case 1:
+//                        Toast.makeText(DiscoverActivity.this, "contacts", Toast.LENGTH_SHORT).show();
+//                        Intent i1 = new Intent(DiscoverActivity.this, ContactsActivity.class);
+//                        i1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        startActivity(i1);
+//                        break;
+//                    case 2: break;
+//                    case 3:
+//                        Toast.makeText(DiscoverActivity.this, "me", Toast.LENGTH_SHORT).show();
+//                        Intent i3 = new Intent(DiscoverActivity.this, MeActivity.class);
+//                        i3.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        startActivity(i3);
+//                        break;
+//                }
+//
+//            }
+//        });
+//    }
 }

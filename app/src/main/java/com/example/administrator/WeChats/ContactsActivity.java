@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsActivity extends AppCompatActivity {
-    public static Fragment[] mFragments;
+//    public static Fragment[] mFragments;
     ArrayAdapter<String> contacts_adapter;
     private List<String> contactsList=new ArrayList<>();
 
@@ -27,12 +27,14 @@ public class ContactsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
-        setFragmentIndicator(1);
+
+//      setFragmentIndicator(1);
+        FragmentIndicator contacts_fragment=new FragmentIndicator();
+        contacts_fragment.setFragmentIndicator(ContactsActivity.this,1);
 
         ListView ContactsView = findViewById(R.id.contacts_view);
-        contacts_adapter = new ArrayAdapter<>(ContactsActivity.this,
-                android.R.layout.simple_list_item_1, contactsList);
-            ContactsView.setAdapter(contacts_adapter);
+        contacts_adapter = new ArrayAdapter<>(ContactsActivity.this, android.R.layout.simple_list_item_1, contactsList);
+        ContactsView.setAdapter(contacts_adapter);
 
         if (ContextCompat.checkSelfPermission(ContactsActivity.this,
                 Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
@@ -82,45 +84,45 @@ public class ContactsActivity extends AppCompatActivity {
         }
     }
 
-    public void setFragmentIndicator(int whichIsDefault) {
-        mFragments = new Fragment[4];
-        mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
-        mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
-        mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
-        mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
-
-        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
-                .show(mFragments[whichIsDefault]).commit();
-
-        ViewIndicator mIndicator =  findViewById(R.id.indicator);
-        ViewIndicator.setIndicator(whichIsDefault);
-        mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
-            @Override
-            public void onIndicate(View v, int which) {
-                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
-                        .show(mFragments[which]).commit();
-                switch (which) {
-                    case 0:
-                        Toast.makeText(ContactsActivity.this, "wechat", Toast.LENGTH_SHORT).show();
-                        Intent i0 = new Intent(ContactsActivity.this, WeChatActivity.class);
-                        i0.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i0);
-                        break;
-                    case 1: break;
-                    case 2:
-                        Toast.makeText(ContactsActivity.this, "discover", Toast.LENGTH_SHORT).show();
-                        Intent i2 = new Intent(ContactsActivity.this, DiscoverActivity.class);
-                        i2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i2);
-                        break;
-                    case 3:
-                        Toast.makeText(ContactsActivity.this, "me", Toast.LENGTH_SHORT).show();
-                        Intent i3 = new Intent(ContactsActivity.this, MeActivity.class);
-                        i3.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i3);
-                        break;
-                }
-            }
-        });
-    }
+//    public void setFragmentIndicator(int whichIsDefault) {
+//        mFragments = new Fragment[4];
+//        mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
+//        mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
+//        mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
+//        mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
+//
+//        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
+//                .show(mFragments[whichIsDefault]).commit();
+//
+//        ViewIndicator mIndicator =  findViewById(R.id.indicator);
+//        ViewIndicator.setIndicator(whichIsDefault);
+//        mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
+//            @Override
+//            public void onIndicate(View v, int which) {
+//                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
+//                        .show(mFragments[which]).commit();
+//                switch (which) {
+//                    case 0:
+//                        Toast.makeText(ContactsActivity.this, "wechat", Toast.LENGTH_SHORT).show();
+//                        Intent i0 = new Intent(ContactsActivity.this, WeChatActivity.class);
+//                        i0.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        startActivity(i0);
+//                        break;
+//                    case 1: break;
+//                    case 2:
+//                        Toast.makeText(ContactsActivity.this, "discover", Toast.LENGTH_SHORT).show();
+//                        Intent i2 = new Intent(ContactsActivity.this, DiscoverActivity.class);
+//                        i2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        startActivity(i2);
+//                        break;
+//                    case 3:
+//                        Toast.makeText(ContactsActivity.this, "me", Toast.LENGTH_SHORT).show();
+//                        Intent i3 = new Intent(ContactsActivity.this, MeActivity.class);
+//                        i3.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                        startActivity(i3);
+//                        break;
+//                }
+//            }
+//        });
+//    }
 }

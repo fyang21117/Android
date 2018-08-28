@@ -15,14 +15,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MeActivity" />
+
         <activity android:name=".WeChatActivity" />
         <activity android:name=".ChatActivity" />
+        <activity android:name=".ContactsActivity"/>
         <activity android:name=".DiscoverActivity" />
+        <activity android:name=".MeActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <!-- <action android:name="com.example.administrator.qqdemo.FORCE_OFFLINE"/> -->
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -34,10 +35,10 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths">
+            </meta-data>
         </provider>
 
-        <activity android:name=".ContactsActivity"></activity>
     </application>
 
 </manifest>

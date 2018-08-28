@@ -9,13 +9,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends MeActivity
+public class LoginActivity extends AppCompatActivity
 {
     private SharedPreferences pref;                     //following
     private SharedPreferences.Editor editor;
@@ -42,8 +43,9 @@ public class LoginActivity extends MeActivity
         passwordEdit = findViewById(R.id.password);
         rememberPass = findViewById(R.id.remember_pass);
         login = findViewById(R.id.login);
+
         boolean isRemember = pref.getBoolean("remember_password",false);
-        if(isRemember){     //true
+        if(isRemember){
             String account = pref.getString("account","");
             String password = pref.getString("password","");        //读取键值对
             accountEdit.setText(account);
@@ -57,7 +59,7 @@ public class LoginActivity extends MeActivity
                 String password = passwordEdit.getText().toString();
                 if(account.equals("fyang") && password.equals("123456") && network_status) {
                     editor = pref.edit();
-                    if(rememberPass.isChecked()){   //if checked,display account and passwd
+                    if(rememberPass.isChecked()){
                         editor.putBoolean("remember_password",true);
                         editor.putString("account",account);                    //存储键值对
                         editor.putString("password",password);
@@ -99,6 +101,6 @@ public class LoginActivity extends MeActivity
         {
             unregisterReceiver(networkChangeReceiver);
             networkChangeReceiver = null;
-        }// ActivityCollector.removeActivity(this);
+        }
     }
 }
