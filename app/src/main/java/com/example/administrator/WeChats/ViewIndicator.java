@@ -26,8 +26,8 @@ public class ViewIndicator extends LinearLayout implements View.OnClickListener 
         private static final String TAG_TEXT_2 = "text_tag_2";
         private static final String TAG_TEXT_3 = "text_tag_3";
 
-        private static final int COLOR_UNSELECT = Color.argb(100, 0xff, 0xff, 0xff);
-        private static final int COLOR_SELECT = Color.WHITE;
+        private static final int COLOR_UNSELECT = Color.BLACK;
+        private static final int COLOR_SELECT = Color.BLACK;
 
         public ViewIndicator(Context context) {
             super(context);
@@ -52,18 +52,19 @@ textTag文字标签
             view.setOrientation(LinearLayout.VERTICAL);
             view.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
             view.setGravity(Gravity.CENTER_HORIZONTAL);
-            view.setBackgroundResource(R.mipmap.indicator_bg_normal);
+            view.setBackgroundResource(R.drawable.indicator_bg_normal);
 
            ImageView iconView = new ImageView(getContext());
             iconView.setTag(iconTag);
             iconView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
             iconView.setImageResource(iconResID);
 
+
            TextView textView = new TextView(getContext());
             textView.setTag(textTag);
             textView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
             textView.setTextColor(stringColor);
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             textView.setText(stringResID);
 
             view.addView(iconView);
@@ -73,25 +74,25 @@ textTag文字标签
 
         private void init() {
             mIndicators = new View[4];
-            mIndicators[0] = createIndicator(R.mipmap.indicator_chat_focus, R.string.tab_item_home, COLOR_SELECT, TAG_ICON_0, TAG_TEXT_0);
+            mIndicators[0] = createIndicator(R.mipmap.chats_focus, R.string.tab_item_home, COLOR_SELECT, TAG_ICON_0, TAG_TEXT_0);
             mIndicators[0].setBackgroundResource(R.drawable.indicator_bg);
             mIndicators[0].setTag(Integer.valueOf(0));
             mIndicators[0].setOnClickListener(this);
             addView(mIndicators[0]);
 
-            mIndicators[1] = createIndicator(R.mipmap.indicator_contacts_normal, R.string.tab_item_category, COLOR_UNSELECT, TAG_ICON_1, TAG_TEXT_1);
+            mIndicators[1] = createIndicator(R.mipmap.contacts_normal, R.string.tab_item_category, COLOR_UNSELECT, TAG_ICON_1, TAG_TEXT_1);
             mIndicators[1].setBackgroundResource(R.drawable.indicator_bg);
             mIndicators[1].setTag(Integer.valueOf(1));
             mIndicators[1].setOnClickListener(this);
             addView(mIndicators[1]);
 
-            mIndicators[2] = createIndicator(R.mipmap.indicator_discover_normal, R.string.tab_item_down, COLOR_UNSELECT, TAG_ICON_2, TAG_TEXT_2);
+            mIndicators[2] = createIndicator(R.mipmap.discover_focus, R.string.tab_item_down, COLOR_UNSELECT, TAG_ICON_2, TAG_TEXT_2);
             mIndicators[2].setBackgroundResource(R.drawable.indicator_bg);
             mIndicators[2].setTag(Integer.valueOf(2));
             mIndicators[2].setOnClickListener(this);
             addView(mIndicators[2]);
 
-            mIndicators[3] = createIndicator(R.mipmap.indicator_me_normal, R.string.tab_item_user, COLOR_UNSELECT, TAG_ICON_3, TAG_TEXT_3);
+            mIndicators[3] = createIndicator(R.mipmap.me_normal, R.string.tab_item_user, COLOR_UNSELECT, TAG_ICON_3, TAG_TEXT_3);
             mIndicators[3].setBackgroundResource(R.drawable.indicator_bg);
             mIndicators[3].setTag(Integer.valueOf(3));
             mIndicators[3].setOnClickListener(this);
@@ -135,25 +136,25 @@ textTag文字标签
             switch (which) {
                 case 0:
                     currIcon =  mIndicators[which].findViewWithTag(TAG_ICON_0);
-                    currIcon.setImageResource(R.mipmap.indicator_chat_focus);
+                    currIcon.setImageResource(R.mipmap.chats_focus);
                     currText =  mIndicators[which].findViewWithTag(TAG_TEXT_0);
                     currText.setTextColor(COLOR_SELECT);
                     break;
                 case 1:
                     currIcon =  mIndicators[which].findViewWithTag(TAG_ICON_1);
-                    currIcon.setImageResource(R.mipmap.indicator_contacts_focus);
+                    currIcon.setImageResource(R.mipmap.contacts_focus);
                     currText =  mIndicators[which].findViewWithTag(TAG_TEXT_1);
                     currText.setTextColor(COLOR_SELECT);
                     break;
                 case 2:
                     currIcon =  mIndicators[which].findViewWithTag(TAG_ICON_2);
-                    currIcon.setImageResource(R.mipmap.indicator_discover_focus);
+                    currIcon.setImageResource(R.mipmap.discover_normal);
                     currText =  mIndicators[which].findViewWithTag(TAG_TEXT_2);
                     currText.setTextColor(COLOR_SELECT);
                     break;
                 case 3:
                     currIcon =  mIndicators[which].findViewWithTag(TAG_ICON_3);
-                    currIcon.setImageResource(R.mipmap.indicator_me_focus);
+                    currIcon.setImageResource(R.mipmap.me_focus);
                     currText =  mIndicators[which].findViewWithTag(TAG_TEXT_3);
                     currText.setTextColor(COLOR_SELECT);
                     break;

@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity
 {
-    private SharedPreferences pref;                     //following
+    private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private CheckBox rememberPass;
     private EditText accountEdit;
@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity
             public void onClick(View v) {
                 String account = accountEdit.getText().toString();
                 String password = passwordEdit.getText().toString();
-                if(account.equals("fyang") && password.equals("123456") && network_status) {
+                if(account.equals("fyang") && password.equals("123456") && network_status) {//密码加密！改进
                     editor = pref.edit();
                     if(rememberPass.isChecked()){
                         editor.putBoolean("remember_password",true);
@@ -67,8 +67,8 @@ public class LoginActivity extends AppCompatActivity
                          {    editor.clear();   }
                     editor.apply();
 
-                    Intent i = new Intent(LoginActivity.this,WeChatActivity.class);
-                    startActivity(i);
+                    Intent login = new Intent(LoginActivity.this,WeChatActivity.class);
+                    startActivity(login);
                     finish();
                 }
                 else if(!network_status)

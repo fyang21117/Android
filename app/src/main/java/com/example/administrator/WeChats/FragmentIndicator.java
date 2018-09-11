@@ -1,17 +1,23 @@
 package com.example.administrator.WeChats;
-//import android.app.Fragment;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Toast;
 
-//import static com.example.administrator.WeChats.WeChatActivity.mFragments;
 
  public class FragmentIndicator extends Fragment implements ViewIndicator.OnIndicateListener
 {
     public static Fragment[] mFragments;
-    public  void setFragmentIndicator(Activity activity,int whichIsDefault)
+
+    public void onCreate(){}                        //考虑用
+
+    public FragmentIndicator(){                     //创建对象，至少调用一个构造方法，与类同名
+        //     super.getContext();
+    }
+
+    public  void setFragmentIndicator(  Activity activity, int whichIsDefault)
     {
         mFragments = new Fragment[4];
         mFragments[0] = getFragmentManager().findFragmentById(R.id.fragment_wechat);
@@ -22,11 +28,10 @@ import android.widget.Toast;
         getFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
                 .show(mFragments[whichIsDefault]).commit();                 //显示默认的Fragment
 
-        ViewIndicator mIndicator = activity.findViewById(R.id.indicator);
+        ViewIndicator mIndicator = activity.findViewById(R.id.indicator);   //隶属那个活动用findviewbyid();
         ViewIndicator.setIndicator(whichIsDefault);
         mIndicator.setOnIndicateListener(this);
     }
-
 
     @Override
     public void onIndicate(View v, int which)

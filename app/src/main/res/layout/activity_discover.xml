@@ -5,20 +5,26 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/take_photo"
+        android:id="@+id/circle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="take photo" />
+        android:text="朋友圈" />
+
     <Button
-        android:id="@+id/select_photo"
+        android:id="@+id/scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="select photo"/>
-    <ImageView
-        android:id="@+id/photo"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:gravity="center_horizontal"/>
+        android:text="扫一扫"/>
+    <Button
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="搜一搜"/>
+    <!--<ImageView-->
+        <!--android:id="@+id/photo"-->
+        <!--android:layout_width="350dp"-->
+        <!--android:layout_height="350dp"-->
+        <!--android:gravity="center_horizontal"/>-->
 
     <LinearLayout
         android:layout_gravity="bottom"

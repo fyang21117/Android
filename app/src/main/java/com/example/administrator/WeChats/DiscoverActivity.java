@@ -1,248 +1,124 @@
 package com.example.administrator.WeChats;
-
-import android.Manifest;
-import android.annotation.TargetApi;
-import android.content.ContentUris;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 public class DiscoverActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageView photo;
-    private Uri imageUri;
-    private static final int TAKE_PHOTO =1;
-    private static final int SELECT_PHOTO =2;
-//    public static Fragment[] mFragments;
+
+    public static Fragment[] mFragments;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
 
-//        setFragmentIndicator(2);
-        FragmentIndicator discover_fragment=new FragmentIndicator();
-        discover_fragment.setFragmentIndicator(DiscoverActivity.this,2);
+        ActionBar actionBar=getSupportActionBar();
+ //       actionBar.setDisplayHomeAsUpEnabled(true);
 
-        Button takePhoto = findViewById(R.id.take_photo);
-        Button selectPhoto = findViewById(R.id.select_photo);
-        photo = findViewById(R.id.photo);
+        setFragmentIndicator(2);
+//        FragmentIndicator discover_fragment=new FragmentIndicator();
+//        discover_fragment.setFragmentIndicator(DiscoverActivity.this,2);
 
-        takePhoto.setOnClickListener(this);
-        selectPhoto.setOnClickListener(this);
-        photo.setOnClickListener(this);
+        Button circle = findViewById(R.id.circle);
+        Button scan = findViewById(R.id.scan);
+        Button search = findViewById(R.id.search);
+        circle.setOnClickListener(this);
+        scan.setOnClickListener(this);
+        search.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v)
     {
         switch (v.getId()) {
-            case R.id.take_photo:
-                {
-                File outputImage = new File(getExternalCacheDir(), "output_image.jpg");
-                try {
-                    if (outputImage.exists()) {
-                        outputImage.delete();
-                    }
-                    outputImage.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (Build.VERSION.SDK_INT >= 24) {
-                    imageUri = FileProvider.getUriForFile(DiscoverActivity.this,
-                            "com.example.administrator.WeChats.fileprovider", outputImage);
-                } else {
-                    imageUri = Uri.fromFile(outputImage);
-                }
-                //打开相机
-                Intent open_camera = new Intent("android.media.action.IMAGE_CAPTURE");
-                open_camera.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                startActivityForResult(open_camera, TAKE_PHOTO);
+
+            case R.id.circle:
+            {
+                Intent circle = new Intent(DiscoverActivity.this,CircleActivity.class);
+                circle.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(circle);
             }break;
-
-            case R.id.select_photo:
-                {
-                if (ContextCompat.checkSelfPermission(DiscoverActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {                                                                   //动态申请对sd卡读写能力
-                    ActivityCompat.requestPermissions(DiscoverActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 3);
-                } else {
-                    openAlbum();
-                }
-                }break;
-
-            case R.id.photo:
-                {
-                Toast.makeText(DiscoverActivity.this, "the photo is clicked", Toast.LENGTH_SHORT).show();
-                }break;
+            case R.id.scan:
+            {
+                Toast.makeText(this,"scan",Toast.LENGTH_SHORT).show();
+            }break;
+            case R.id.search:
+            {
+                Toast.makeText(this,"search",Toast.LENGTH_SHORT).show();
+            }break;
             default :break;
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-    private void openAlbum()                //打开相册
-    {
-        Intent open_album = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);//"android.intent.action.GET_CONTNET"
-        open_album.setType("image/*");
-        startActivityForResult(open_album,SELECT_PHOTO);
+        getMenuInflater().inflate(R.menu.home_menu,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults)
-    {                                       //弹框请求权限
-        switch(requestCode)
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
         {
-            case 3:if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
-                        {   openAlbum();    }
-                    else
-                         {    Toast.makeText(this,"you denied the permission",Toast.LENGTH_SHORT).show();}
-                    break;
-            default:
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode,int resultCode,Intent data)
-    {
-        switch (requestCode)
-        {
-            case TAKE_PHOTO:
-                if(resultCode == RESULT_OK)
-                {
-                    try{                                        //拍照成功，解析为bitmap格式显示
-                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver()
-                                .openInputStream(imageUri));
-                        photo.setImageBitmap(bitmap);
-                    }catch (FileNotFoundException e)    {e.printStackTrace();}
-                }break;
-
-            case SELECT_PHOTO:
-                if(resultCode == RESULT_OK)
-                {
-                    if(Build.VERSION.SDK_INT>=19)               //判断手机系统版本号
-                        {   handleImageOnKitKat(data);    }
-                    else
-                        handleImageBeforeKitKat(data);
-                }break;
-                default:break;
-        }
-    }
-
-    @TargetApi(19)
-    private void handleImageOnKitKat(Intent data)           //封装的图片URI
-    {
-        String imagePath = null;
-        Uri uri = data.getData();
-        if(DocumentsContract.isDocumentUri(this,uri))
-        {
-            String docId = DocumentsContract.getDocumentId(uri);
-            if("com.android.providers.media.documents".equals(uri.getAuthority()))
+            case R.id.menu_search:
             {
-                String id = docId.split(":")[1];
-                String selection = MediaStore.Images.Media._ID+"="+id;
-                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,selection);
-            }
-            else if("com.android.providers.downloads.documents".equals(uri.getAuthority()))
+                Toast.makeText(this,"menu_search",Toast.LENGTH_SHORT).show();
+            }break;
+
+            case R.id.menu_add:
             {
-                Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"),Long.valueOf(docId));
-                imagePath = getImagePath(contentUri,null);
+                Toast.makeText(this,"menu_add",Toast.LENGTH_SHORT).show();
+            }break;
+            default :break;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+    private void setFragmentIndicator(int whichIsDefault) {
+        mFragments = new Fragment[4];
+        mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
+        mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
+        mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
+        mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
+
+//        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
+
+        ViewIndicator mIndicator =  findViewById(R.id.indicator);
+        ViewIndicator.setIndicator(whichIsDefault);
+        mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
+            @Override
+            public void onIndicate(View v, int which) {
+                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
+                switch (which) {
+                    case 0:
+                        Toast.makeText(DiscoverActivity.this, "wechat", Toast.LENGTH_SHORT).show();
+                        Intent i0 = new Intent(DiscoverActivity.this, WeChatActivity.class);
+                        i0.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(i0);
+                        break;
+                    case 1:
+                        Toast.makeText(DiscoverActivity.this, "contacts", Toast.LENGTH_SHORT).show();
+                        Intent i1 = new Intent(DiscoverActivity.this, ContactsActivity.class);
+                        i1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(i1);
+                        break;
+                    case 2: break;
+                    case 3:
+                        Toast.makeText(DiscoverActivity.this, "me", Toast.LENGTH_SHORT).show();
+                        Intent i3 = new Intent(DiscoverActivity.this, MeActivity.class);
+                        i3.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(i3);
+                        break;
+                }
+
             }
-        }
-        else if("content".equalsIgnoreCase(uri.getScheme()))
-                imagePath = getImagePath(uri,null);
-        else if ("file".equalsIgnoreCase(uri.getScheme()))
-                imagePath = uri.getPath();
-         displayImage(imagePath);
+        });
     }
-
-    private void handleImageBeforeKitKat(Intent data)        //图片真实的URI
-    {
-        Uri uri = data.getData();
-        String imagePath = getImagePath(uri,null);
-        displayImage(imagePath);
-    }
-
-    private String getImagePath(Uri uri,String selection)
-    {
-        String path = null;
-        Cursor cursor  = getContentResolver().query(uri,null,selection,null,null);
-        if(cursor != null) {
-            if (cursor.moveToFirst()) {
-                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-            }
-            cursor.close();
-        }
-        return path;
-    }
-
-    private void displayImage(String imagePath)
-    {
-        if(imagePath !=null)
-        {
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            photo.setImageBitmap(bitmap);
-        }else{
-            Toast.makeText(this,"failed to get image",Toast.LENGTH_SHORT).show();
-        }
-    }
-
-//    private void setFragmentIndicator(int whichIsDefault) {
-//        mFragments = new Fragment[4];
-//        mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
-//        mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
-//        mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
-//        mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
-//
-//        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
-//                .show(mFragments[whichIsDefault]).commit();
-//
-//        ViewIndicator mIndicator =  findViewById(R.id.indicator);
-//        ViewIndicator.setIndicator(whichIsDefault);
-//        mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
-//            @Override
-//            public void onIndicate(View v, int which) {
-//                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
-//                        .show(mFragments[which]).commit();
-//                switch (which) {
-//                    case 0:
-//                        Toast.makeText(DiscoverActivity.this, "wechat", Toast.LENGTH_SHORT).show();
-//                        Intent i0 = new Intent(DiscoverActivity.this, WeChatActivity.class);
-//                        i0.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                        startActivity(i0);
-//                        break;
-//                    case 1:
-//                        Toast.makeText(DiscoverActivity.this, "contacts", Toast.LENGTH_SHORT).show();
-//                        Intent i1 = new Intent(DiscoverActivity.this, ContactsActivity.class);
-//                        i1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                        startActivity(i1);
-//                        break;
-//                    case 2: break;
-//                    case 3:
-//                        Toast.makeText(DiscoverActivity.this, "me", Toast.LENGTH_SHORT).show();
-//                        Intent i3 = new Intent(DiscoverActivity.this, MeActivity.class);
-//                        i3.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                        startActivity(i3);
-//                        break;
-//                }
-//
-//            }
-//        });
-//    }
 }

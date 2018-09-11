@@ -1,13 +1,15 @@
 package com.example.administrator.WeChats;
 
+
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,17 +28,16 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
 
     private List<Msg> msgList = new ArrayList<>();
     private EditText inputText;
-    private Button send,back,edit;
     private RecyclerView msgRecyclerView;
     private MsgAdapter chat_adapter;
-
+    private Button send;
     @Override
     protected void onCreate(Bundle savedInstaceState) {
         super.onCreate(savedInstaceState);
         setContentView(R.layout.activity_talk);
 
-        ActionBar actionBar=getSupportActionBar();          //隐藏标题
-        if(actionBar !=null)    {   actionBar.hide(); }
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         inputText = findViewById(R.id.input_text);
         String input_Text = load();
@@ -55,12 +56,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         msgRecyclerView.setAdapter(chat_adapter);
 
         send = findViewById(R.id.send);
-        back=findViewById(R.id.title_back);
-        edit=findViewById(R.id.title_edit);
-
         send.setOnClickListener(this);
-        back.setOnClickListener(this);
-        edit.setOnClickListener(this);
     }
 
     @Override
@@ -78,18 +74,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                         msgRecyclerView.scrollToPosition(msgList.size() - 1);
                         inputText.setText("");
                     }
-                }break;
-
-            case R.id.title_back:
-                {
-                    Intent i3 = new Intent(ChatActivity.this,WeChatActivity.class);
-                    startActivity(i3);
-                    finish();
-                }break;
-
-            case R.id.title_edit:
-                {
-                    Toast.makeText(ChatActivity.this,"nothing to edit yet",Toast.LENGTH_SHORT).show();
                 }break;
             default:break;
         }
@@ -132,6 +116,27 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.chats_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+            {
+                finish();
+            }break;
+            default :break;
+        }
+        return super.onOptionsItemSelected(item);
+
     }
 
     public String load(){

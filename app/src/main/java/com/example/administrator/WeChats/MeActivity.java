@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -17,25 +19,29 @@ import android.widget.Toast;
 public class MeActivity extends AppCompatActivity implements View.OnClickListener
 {
     private ForceOfflineReceiver forceOfflineReceiver;
-//    public static Fragment[] mFragments;
+    public static Fragment[] mFragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_me);
 
-        ActionBar actionBar=getSupportActionBar();          //隐藏标题
-        if(actionBar !=null)    {   actionBar.hide(); }
+        ActionBar actionBar=getSupportActionBar();
+ //       actionBar.setDisplayHomeAsUpEnabled(true);
 
-//        setFragmentIndicator(3);
-        FragmentIndicator me_fragment=new FragmentIndicator();
-        me_fragment.setFragmentIndicator(MeActivity.this,3);
+        setFragmentIndicator(3);
+//        FragmentIndicator me_fragment=new FragmentIndicator();
+//        me_fragment.setFragmentIndicator(MeActivity.this,3);
 
-        //----------------------force offline----------------------
+        //--------------------------------------------
         Button forceOffline = findViewById(R.id.forceoffline);
-        Button back = findViewById(R.id.title_back);
+        Button about_me = findViewById(R.id.about_me);
+        Button setting = findViewById(R.id.settings);
+        Button logout = findViewById(R.id.logout);
         forceOffline.setOnClickListener(this);
-        back.setOnClickListener(this);
+        about_me.setOnClickListener(this);
+        setting.setOnClickListener(this);
+        logout.setOnClickListener(this);
     }
 
     @Override
@@ -50,16 +56,48 @@ public class MeActivity extends AppCompatActivity implements View.OnClickListene
                 Toast.makeText(MeActivity.this," sendBroadcast(Force to offline!)",Toast.LENGTH_SHORT).show();
                 }break;
 
-            case R.id.title_back:
+            case R.id.about_me:
                 {
-                Intent i4 = new Intent(MeActivity.this,WeChatActivity.class);
-                startActivity(i4);
-                finish();
+                Toast.makeText(this,"ID:21117",Toast.LENGTH_SHORT).show();
                 }break;
+            case R.id.settings:
+            {
+                Toast.makeText(this,"systems",Toast.LENGTH_SHORT).show();
+            }break;
+            case R.id.logout:
+            {
+                Intent logout = new Intent(MeActivity.this,LoginActivity.class);
+                startActivity(logout);
+                finish();
+            }break;
             default:break;
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        getMenuInflater().inflate(R.menu.home_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.menu_search:
+            {
+                Toast.makeText(this,"menu_search",Toast.LENGTH_SHORT).show();
+            }break;
+
+            case R.id.menu_add:
+            {
+                Toast.makeText(this,"menu_add",Toast.LENGTH_SHORT).show();
+            }break;
+            default :break;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
     class ForceOfflineReceiver extends BroadcastReceiver
     {
         @Override
@@ -104,47 +142,45 @@ public class MeActivity extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-//    private void setFragmentIndicator(int whichIsDefault) {     //初始化fragment
-//        mFragments = new Fragment[4];
-//        mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
-//        mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
-//        mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
-//        mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
-//
-//        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1])      //显示默认的Fragment
-//                .hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
-//
-//        ViewIndicator mIndicator =  findViewById(R.id.indicator);//绑定自定义的菜单栏组件
-//        ViewIndicator.setIndicator(whichIsDefault);
-//        mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
-//            @Override
-//            public void onIndicate(View v, int which) {
-//                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1])
-//                        .hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
-//                switch (which) {
-//                    case 0:
-//                        Toast.makeText(MeActivity.this, "wechat", Toast.LENGTH_SHORT).show();
-//                        Intent i0 = new Intent(MeActivity.this, WeChatActivity.class);
-//                        i0.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                        startActivity(i0);
-//                         break;
-//                    case 1:
-//                        Toast.makeText(MeActivity.this, "contacts", Toast.LENGTH_SHORT).show();
-//                        Intent i1 = new Intent(MeActivity.this, ContactsActivity.class);
-//                        i1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                        startActivity(i1);
-//                        break;
-//                    case 2:
-//                        Toast.makeText(MeActivity.this, "discover", Toast.LENGTH_SHORT).show();
-//                        Intent i2 = new Intent(MeActivity.this, DiscoverActivity.class);
-//                        i2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//                        startActivity(i2);
-//                        break;
-//                    case 3: break;
-//                    default:break;
-//                }
-//            }
-//        });
-//    }
+    private void setFragmentIndicator(int whichIsDefault) {     //初始化fragment
+        mFragments = new Fragment[4];
+        mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
+        mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
+        mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
+        mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
+
+//        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1])      //显示默认的Fragment.hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
+
+        ViewIndicator mIndicator =  findViewById(R.id.indicator);//绑定自定义的菜单栏组件
+        ViewIndicator.setIndicator(whichIsDefault);
+        mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
+            @Override
+            public void onIndicate(View v, int which) {
+                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
+                switch (which) {
+                    case 0:
+                        Toast.makeText(MeActivity.this, "wechat", Toast.LENGTH_SHORT).show();
+                        Intent i0 = new Intent(MeActivity.this, WeChatActivity.class);
+                        i0.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(i0);
+                         break;
+                    case 1:
+                        Toast.makeText(MeActivity.this, "contacts", Toast.LENGTH_SHORT).show();
+                        Intent i1 = new Intent(MeActivity.this, ContactsActivity.class);
+                        i1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(i1);
+                        break;
+                    case 2:
+                        Toast.makeText(MeActivity.this, "discover", Toast.LENGTH_SHORT).show();
+                        Intent i2 = new Intent(MeActivity.this, DiscoverActivity.class);
+                        i2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(i2);
+                        break;
+                    case 3: break;
+                    default:break;
+                }
+            }
+        });
+    }
 
 }

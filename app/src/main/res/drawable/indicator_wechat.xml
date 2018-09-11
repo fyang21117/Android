@@ -2,12 +2,12 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
         <!-- pressed -->
-        <item android:drawable="@mipmap/indicator_chat_focus" android:state_enabled="true" android:state_pressed="true"/>
+        <item android:drawable="@mipmap/chats_focus" android:state_enabled="true" android:state_pressed="true"/>
 
         <!-- focused -->
-        <item android:drawable="@mipmap/indicator_chat_focus" android:state_enabled="true" android:state_focused="true"/>
+        <item android:drawable="@mipmap/chats_focus" android:state_enabled="true" android:state_focused="true"/>
 
         <!-- normal -->
-        <item android:drawable="@mipmap/indicator_chat_normal" android:state_enabled="true"/>
+        <item android:drawable="@mipmap/chats_normal" android:state_enabled="true"/>
 
 </selector>
