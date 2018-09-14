@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.litepal.LitePal;
+
 public class DiscoverActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static Fragment[] mFragments;
@@ -29,6 +31,8 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         Button circle = findViewById(R.id.circle);
         Button scan = findViewById(R.id.scan);
         Button search = findViewById(R.id.search);
+        Button createDatabase = findViewById(R.id.createdb);
+        createDatabase.setOnClickListener(this);
         circle.setOnClickListener(this);
         scan.setOnClickListener(this);
         search.setOnClickListener(this);
@@ -53,6 +57,10 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
             {
                 Toast.makeText(this,"search",Toast.LENGTH_SHORT).show();
             }break;
+            case R.id.createdb:
+            {
+                LitePal.getDatabase();
+            }
             default :break;
         }
     }

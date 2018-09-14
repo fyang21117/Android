@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
- public class FragmentDiscover extends Fragment {
+import com.example.administrator.WeChats.R;
+
+public class FragmentDiscover extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

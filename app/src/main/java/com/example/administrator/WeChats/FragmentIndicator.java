@@ -6,8 +6,15 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.administrator.WeChats.ContactsActivity;
+import com.example.administrator.WeChats.DiscoverActivity;
+import com.example.administrator.WeChats.MeActivity;
+import com.example.administrator.WeChats.R;
+import com.example.administrator.WeChats.ViewIndicator;
+import com.example.administrator.WeChats.WeChatActivity;
 
- public class FragmentIndicator extends Fragment implements ViewIndicator.OnIndicateListener
+
+public class FragmentIndicator extends Fragment implements ViewIndicator.OnIndicateListener
 {
     public static Fragment[] mFragments;
 

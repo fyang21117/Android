@@ -48,6 +48,8 @@ public class CircleActivity extends AppCompatActivity implements View.OnClickLis
 
         circle_photo = findViewById(R.id.circle_photo);
         circle_photo.setOnClickListener(this);
+        photo = findViewById(R.id.photo);
+        photo.setOnClickListener(this);
     }
     @Override
     public void onClick(View v)
@@ -55,6 +57,10 @@ public class CircleActivity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId())
         {
             case R.id.circle_photo:
+            {
+                Toast.makeText(CircleActivity.this, "the circle_photo is clicked", Toast.LENGTH_SHORT).show();
+            }break;
+            case R.id.photo:
             {
                 Toast.makeText(CircleActivity.this, "the photo is clicked", Toast.LENGTH_SHORT).show();
             }break;
@@ -119,9 +125,8 @@ public class CircleActivity extends AppCompatActivity implements View.OnClickLis
             {
                 File outputImage = new File(getExternalCacheDir(), "output_image.jpg");
                 try {
-                    if (outputImage.exists()) {
+                    if (outputImage.exists())
                         outputImage.delete();
-                    }
                     outputImage.createNewFile();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -160,10 +165,13 @@ public class CircleActivity extends AppCompatActivity implements View.OnClickLis
         {
             case 3:
                 if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED) {
-                openAlbum(); break;   }
-            else {
+                     openAlbum();
+                     break;
+                }
+                else {
                     Toast.makeText(this,"you denied the permission",Toast.LENGTH_SHORT).show();
-                    break;}
+                    break;
+                }
             default:
         }
     }

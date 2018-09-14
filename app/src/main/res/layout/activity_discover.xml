@@ -8,23 +8,23 @@
         android:id="@+id/circle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="朋友圈" />
+        android:text="@string/pengyouquan" />
 
     <Button
         android:id="@+id/scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="扫一扫"/>
+        android:text="@string/saoyisao"/>
     <Button
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="搜一搜"/>
-    <!--<ImageView-->
-        <!--android:id="@+id/photo"-->
-        <!--android:layout_width="350dp"-->
-        <!--android:layout_height="350dp"-->
-        <!--android:gravity="center_horizontal"/>-->
+        android:text="@string/souyisou"/>
+    <Button
+        android:id="@+id/createdb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/createdb"/>
 
     <LinearLayout
         android:layout_gravity="bottom"

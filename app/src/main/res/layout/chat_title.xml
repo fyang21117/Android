@@ -10,16 +10,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:text="Back" />
+        android:text="@string/title_back" />
 
     <TextView
         android:id="@+id/title_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:text="who"
+        android:text="@string/title_text"
         android:textSize="24sp" />
 
     <Button
@@ -28,5 +28,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:text="Edit" />
+        android:text="@string/title_edit" />
 </LinearLayout>

@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.administrator.WeChats.R;
+
 public class ViewIndicator extends LinearLayout implements View.OnClickListener {
 
         private int mDefaultIndicator = 0;                          // 默认的选定View

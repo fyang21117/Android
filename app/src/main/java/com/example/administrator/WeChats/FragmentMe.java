@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.administrator.WeChats.R;
+
 public class FragmentMe extends Fragment {
 
     @Override

@@ -6,9 +6,9 @@
     <string name="Login">Login</string>
     <string name="Send">Send</string>
     <string name="More">More</string>
-    <string name="title_back">title_back</string>
-    <string name="title_text">title_text</string>
-    <string name="title_edit">title_edit</string>
+    <string name="title_back">back</string>
+    <string name="title_text">text</string>
+    <string name="title_edit">edit</string>
     <string name="Receive">Receive</string>
     <string name="WeChat">WeChat</string>
     <string name="Contacts">Contacts</string>
@@ -22,4 +22,10 @@
     <string name="tab_item_category">"通讯录"</string>
     <string name="tab_item_down">"发现"</string>
     <string name="tab_item_user">"我"</string>
+    <string name="saoyisao">扫一扫</string>
+    <string name="souyisou">搜一搜</string>
+    <string name="pengyouquan">朋友圈</string>
+    <string name="createdb">创建数据库</string>
+    <string name="circle_photo">circle_photo</string>
+    <string name="photo">photo</string>
 </resources>
