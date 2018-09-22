@@ -6,13 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.administrator.WeChats.ContactsActivity;
-import com.example.administrator.WeChats.DiscoverActivity;
-import com.example.administrator.WeChats.MeActivity;
-import com.example.administrator.WeChats.R;
-import com.example.administrator.WeChats.ViewIndicator;
-import com.example.administrator.WeChats.WeChatActivity;
-
 
 public class FragmentIndicator extends Fragment implements ViewIndicator.OnIndicateListener
 {
@@ -47,26 +40,27 @@ public class FragmentIndicator extends Fragment implements ViewIndicator.OnIndic
                         .show(mFragments[which]).commit();
                 switch (which) {
                     case 0:
+             //           ActivityWeChat.actionStart(this);
                         Toast.makeText(getContext(),"wechat",Toast.LENGTH_SHORT).show();
-                        Intent i0 = new Intent(getContext(), WeChatActivity.class);
+                        Intent i0 = new Intent(getContext(), ActivityWeChat.class);
                         i0.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(i0);
                         break;
                     case 1:
                         Toast.makeText(getContext(),"contacts",Toast.LENGTH_SHORT).show();
-                        Intent i1 = new Intent(getContext(), ContactsActivity.class);
+                        Intent i1 = new Intent(getContext(), ActivityContacts.class);
                         i1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(i1);
                         break;
                     case 2:
                         Toast.makeText(getContext(), "discover", Toast.LENGTH_SHORT).show();
-                        Intent i2 = new Intent(getContext(), DiscoverActivity.class);
+                        Intent i2 = new Intent(getContext(), ActivityDiscover.class);
                         i2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(i2);
                         break;
                     case 3:
                         Toast.makeText(getContext(), "me", Toast.LENGTH_SHORT).show();
-                        Intent i3 = new Intent(getContext(), MeActivity.class);
+                        Intent i3 = new Intent(getContext(), ActivityMe.class);
                         i3.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         startActivity(i3);
                         break;

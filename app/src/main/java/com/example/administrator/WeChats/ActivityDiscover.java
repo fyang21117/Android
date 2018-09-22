@@ -1,4 +1,5 @@
 package com.example.administrator.WeChats;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,13 +9,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.litepal.LitePal;
 
-public class DiscoverActivity extends AppCompatActivity implements View.OnClickListener {
-
+public class ActivityDiscover extends AppCompatActivity
+        implements View.OnClickListener,ViewIndicator.OnIndicateListener
+{
     public static Fragment[] mFragments;
+    public static void actionStart(Context context) {
+        Intent intent=new Intent(context,ActivityDiscover.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        context.startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -22,33 +30,31 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_discover);
 
         ActionBar actionBar=getSupportActionBar();
- //       actionBar.setDisplayHomeAsUpEnabled(true);
-
+        if(actionBar !=null)
+            actionBar.setDisplayHomeAsUpEnabled(false);
         setFragmentIndicator(2);
 //        FragmentIndicator discover_fragment=new FragmentIndicator();
-//        discover_fragment.setFragmentIndicator(DiscoverActivity.this,2);
+//        discover_fragment.setFragmentIndicator(ActivityDiscover.this,2);
 
+        TextView textView  = findViewById(R.id.addDataView);
         Button circle = findViewById(R.id.circle);
         Button scan = findViewById(R.id.scan);
         Button search = findViewById(R.id.search);
         Button createDatabase = findViewById(R.id.createdb);
-        createDatabase.setOnClickListener(this);
+        Button addData =findViewById(R.id.addData);
         circle.setOnClickListener(this);
         scan.setOnClickListener(this);
         search.setOnClickListener(this);
+        createDatabase.setOnClickListener(this);
+        addData.setOnClickListener(this);
     }
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.circle:
-            {
-                Intent circle = new Intent(DiscoverActivity.this,CircleActivity.class);
-                circle.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(circle);
-            }break;
+                ActivityCircle.actionStart(this);
+                break;
             case R.id.scan:
             {
                 Toast.makeText(this,"scan",Toast.LENGTH_SHORT).show();
@@ -59,27 +65,33 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
             }break;
             case R.id.createdb:
             {
-                LitePal.getDatabase();
-            }
+//                LitePal.getDatabase();
+            }break;
+            case R.id.addData:
+            {
+//                Friends f = new Friends();
+//                f.setId(1995);
+//                f.setName("old friends");
+//                f.setNumber(11);
+//                f.setSex(true);
+//                f.save();
+            }break;
             default :break;
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.home_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.menu_search:
             {
                 Toast.makeText(this,"menu_search",Toast.LENGTH_SHORT).show();
             }break;
-
             case R.id.menu_add:
             {
                 Toast.makeText(this,"menu_add",Toast.LENGTH_SHORT).show();
@@ -87,46 +99,33 @@ public class DiscoverActivity extends AppCompatActivity implements View.OnClickL
             default :break;
         }
         return super.onOptionsItemSelected(item);
-
     }
+
     private void setFragmentIndicator(int whichIsDefault) {
         mFragments = new Fragment[4];
         mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
         mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
         mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
         mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
-
-//        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
-
-        ViewIndicator mIndicator =  findViewById(R.id.indicator);
+//getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
+        ViewIndicator mIndicator = findViewById(R.id.indicator);
         ViewIndicator.setIndicator(whichIsDefault);
-        mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
+        mIndicator.setOnIndicateListener(this);
+    }
             @Override
             public void onIndicate(View v, int which) {
                 getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
                 switch (which) {
                     case 0:
-                        Toast.makeText(DiscoverActivity.this, "wechat", Toast.LENGTH_SHORT).show();
-                        Intent i0 = new Intent(DiscoverActivity.this, WeChatActivity.class);
-                        i0.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i0);
+                        ActivityWeChat.actionStart(this);
                         break;
                     case 1:
-                        Toast.makeText(DiscoverActivity.this, "contacts", Toast.LENGTH_SHORT).show();
-                        Intent i1 = new Intent(DiscoverActivity.this, ContactsActivity.class);
-                        i1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i1);
+                        ActivityContacts.actionStart(this);
                         break;
                     case 2: break;
                     case 3:
-                        Toast.makeText(DiscoverActivity.this, "me", Toast.LENGTH_SHORT).show();
-                        Intent i3 = new Intent(DiscoverActivity.this, MeActivity.class);
-                        i3.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i3);
+                        ActivityMe.actionStart(this);
                         break;
                 }
-
             }
-        });
-    }
 }

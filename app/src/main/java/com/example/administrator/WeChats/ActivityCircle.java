@@ -3,6 +3,7 @@ package com.example.administrator.WeChats;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,8 +13,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
@@ -22,7 +23,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,43 +30,46 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class CircleActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private ImageView photo,circle_photo;
+public class ActivityCircle extends AppCompatActivity
+        implements View.OnClickListener
+{
+    private ImageView photo;
     private Uri imageUri;
     private static final int TAKE_PHOTO =1;
     private static final int SELECT_PHOTO =2;
 
+    public static void actionStart(Context context) {
+        Intent intent=new Intent(context,ActivityCircle.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        context.startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_circle);
 
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);//返回箭头显示出来
-//        if(actionBar !=null)    {   actionBar.hide(); }
+        if(actionBar !=null)
+            actionBar.setDisplayHomeAsUpEnabled(true);//返回箭头显示出来
+//            {   actionBar.hide(); }
 
-        circle_photo = findViewById(R.id.circle_photo);
+      ImageView  circle_photo = findViewById(R.id.circle_photo);
+      photo = findViewById(R.id.photo);
+
         circle_photo.setOnClickListener(this);
-        photo = findViewById(R.id.photo);
         photo.setOnClickListener(this);
     }
     @Override
-    public void onClick(View v)
-    {
-        switch (v.getId())
-        {
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.circle_photo:
-            {
-                Toast.makeText(CircleActivity.this, "the circle_photo is clicked", Toast.LENGTH_SHORT).show();
-            }break;
+                Toast.makeText(ActivityCircle.this, "the circle_photo is clicked", Toast.LENGTH_SHORT).show();
+                 break;
             case R.id.photo:
-            {
-                Toast.makeText(CircleActivity.this, "the photo is clicked", Toast.LENGTH_SHORT).show();
-            }break;
+                Toast.makeText(ActivityCircle.this, "the photo is clicked", Toast.LENGTH_SHORT).show();
+                break;
             default :break;
         }
-
     }
     private void openAlbum()                //打开相册
     {
@@ -114,8 +117,7 @@ public class CircleActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
+        switch (item.getItemId()) {
             case android.R.id.home:
             {
                 finish();
@@ -132,7 +134,7 @@ public class CircleActivity extends AppCompatActivity implements View.OnClickLis
                     e.printStackTrace();
                 }
                 if (Build.VERSION.SDK_INT >= 24) {
-                    imageUri = FileProvider.getUriForFile(CircleActivity.this,
+                    imageUri = FileProvider.getUriForFile(ActivityCircle.this,
                             "com.example.administrator.WeChats.fileprovider", outputImage);
                 } else {
                     imageUri = Uri.fromFile(outputImage);
@@ -145,21 +147,19 @@ public class CircleActivity extends AppCompatActivity implements View.OnClickLis
 
             case R.id.select_photo:
             {
-                if (ContextCompat.checkSelfPermission(CircleActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {                                                                   //动态申请对sd卡读写能力
-                    ActivityCompat.requestPermissions(CircleActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 3);
+                if (ContextCompat.checkSelfPermission(ActivityCircle.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {                                                                   //动态申请对sd卡读写能力
+                    ActivityCompat.requestPermissions(ActivityCircle.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 3);
                 } else {
                     openAlbum();
                 }
             }break;
-
             default :break;
         }
        return super.onOptionsItemSelected(item);
-
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults)
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,@NonNull int[] grantResults)
     {                                       //弹框请求权限
         switch(requestCode)
         {
@@ -210,6 +210,7 @@ public class CircleActivity extends AppCompatActivity implements View.OnClickLis
         if(DocumentsContract.isDocumentUri(this,uri))
         {
             String docId = DocumentsContract.getDocumentId(uri);
+
             if("com.android.providers.media.documents".equals(uri.getAuthority()))
             {
                 String id = docId.split(":")[1];
@@ -229,6 +230,4 @@ public class CircleActivity extends AppCompatActivity implements View.OnClickLis
             imagePath = uri.getPath();
         displayImage(imagePath);
     }
-
-
 }

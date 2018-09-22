@@ -16,22 +16,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MeActivity extends AppCompatActivity implements View.OnClickListener
+public class ActivityMe extends AppCompatActivity
+        implements View.OnClickListener,ViewIndicator.OnIndicateListener
 {
     private ForceOfflineReceiver forceOfflineReceiver;
     public static Fragment[] mFragments;
 
+    public static void actionStart(Context context) {
+        Intent intent=new Intent(context,ActivityMe.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        context.startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_me);
 
         ActionBar actionBar=getSupportActionBar();
- //       actionBar.setDisplayHomeAsUpEnabled(true);
-
+        if(actionBar!=null)
+           actionBar.setDisplayHomeAsUpEnabled(false);
         setFragmentIndicator(3);
 //        FragmentIndicator me_fragment=new FragmentIndicator();
-//        me_fragment.setFragmentIndicator(MeActivity.this,3);
+//        me_fragment.setFragmentIndicator(ActivityMe.this,3);
 
         //--------------------------------------------
         Button forceOffline = findViewById(R.id.forceoffline);
@@ -45,29 +51,22 @@ public class MeActivity extends AppCompatActivity implements View.OnClickListene
     }
 
     @Override
-    public void onClick(View v)
-    {
-        switch (v.getId())
-        {
-            case R.id.forceoffline:
-                {
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.forceoffline: {
                 Intent intent = new Intent("com.example.administrator.WeChats.FORCE_OFFLINE");// send broadcast
                 sendBroadcast(intent);
-                Toast.makeText(MeActivity.this," sendBroadcast(Force to offline!)",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityMe.this," sendBroadcast(Force to offline!)",Toast.LENGTH_SHORT).show();
                 }break;
 
-            case R.id.about_me:
-                {
+            case R.id.about_me: {
                 Toast.makeText(this,"ID:21117",Toast.LENGTH_SHORT).show();
                 }break;
-            case R.id.settings:
-            {
+            case R.id.settings: {
                 Toast.makeText(this,"systems",Toast.LENGTH_SHORT).show();
             }break;
-            case R.id.logout:
-            {
-                Intent logout = new Intent(MeActivity.this,LoginActivity.class);
-                startActivity(logout);
+            case R.id.logout: {
+                ActivityLogin.actionStart(this);
                 finish();
             }break;
             default:break;
@@ -75,30 +74,25 @@ public class MeActivity extends AppCompatActivity implements View.OnClickListene
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.home_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId())
-        {
-            case R.id.menu_search:
-            {
+        switch (item.getItemId()) {
+            case R.id.menu_search: {
                 Toast.makeText(this,"menu_search",Toast.LENGTH_SHORT).show();
             }break;
 
-            case R.id.menu_add:
-            {
+            case R.id.menu_add: {
                 Toast.makeText(this,"menu_add",Toast.LENGTH_SHORT).show();
             }break;
             default :break;
         }
         return super.onOptionsItemSelected(item);
-
     }
-    class ForceOfflineReceiver extends BroadcastReceiver
+    class ForceOfflineReceiver extends BroadcastReceiver implements DialogInterface.OnClickListener
     {
         @Override
         public void onReceive(final Context context,Intent intent)
@@ -107,36 +101,29 @@ public class MeActivity extends AppCompatActivity implements View.OnClickListene
             builder.setTitle("Warning");
             builder.setMessage("You are forced to be offline.Please try to login again");
             builder.setCancelable(false);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    ActivityCollector.finishAll();
-                    Intent intent = new Intent(context,LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                }
-            });
+            builder.setPositiveButton("OK", this);
             builder.show();
+        }
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            ActivityCollector.finishAll();
+            ActivityLogin.actionStart(ActivityMe.this);
         }
     }
 
     @Override
-    protected  void onResume()
-    {
+    protected  void onResume() {
         super.onResume();
         //----------------------force_offline----------------------
         IntentFilter intentFilter_force = new IntentFilter();
         intentFilter_force.addAction("com.example.administrator.WeChats.FORCE_OFFLINE");//receive broadcast
         forceOfflineReceiver = new ForceOfflineReceiver();
         registerReceiver(forceOfflineReceiver,intentFilter_force);
-        // Toast.makeText(MeActivity.this,"registerReceiver_ForceOffline!",Toast.LENGTH_SHORT).show();
     }
     @Override
-    protected  void onPause()
-    {
+    protected  void onPause() {
         super.onPause();
-        if(forceOfflineReceiver != null)
-        {
+        if(forceOfflineReceiver != null) {
             unregisterReceiver(forceOfflineReceiver);
             forceOfflineReceiver = null;
         }
@@ -148,39 +135,27 @@ public class MeActivity extends AppCompatActivity implements View.OnClickListene
         mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
         mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
         mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
+//     getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1])//显示默认的Fragment.hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
 
-//        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1])      //显示默认的Fragment.hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
-
-        ViewIndicator mIndicator =  findViewById(R.id.indicator);//绑定自定义的菜单栏组件
+        ViewIndicator mIndicator = findViewById(R.id.indicator);//绑定自定义的菜单栏组件
         ViewIndicator.setIndicator(whichIsDefault);
-        mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
+        mIndicator.setOnIndicateListener(this);
+    }
             @Override
             public void onIndicate(View v, int which) {
                 getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
                 switch (which) {
                     case 0:
-                        Toast.makeText(MeActivity.this, "wechat", Toast.LENGTH_SHORT).show();
-                        Intent i0 = new Intent(MeActivity.this, WeChatActivity.class);
-                        i0.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i0);
+                        ActivityWeChat.actionStart(this);
                          break;
                     case 1:
-                        Toast.makeText(MeActivity.this, "contacts", Toast.LENGTH_SHORT).show();
-                        Intent i1 = new Intent(MeActivity.this, ContactsActivity.class);
-                        i1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i1);
+                        ActivityContacts.actionStart(this);
                         break;
                     case 2:
-                        Toast.makeText(MeActivity.this, "discover", Toast.LENGTH_SHORT).show();
-                        Intent i2 = new Intent(MeActivity.this, DiscoverActivity.class);
-                        i2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i2);
+                        ActivityDiscover.actionStart(this);
                         break;
                     case 3: break;
                     default:break;
                 }
             }
-        });
-    }
-
 }

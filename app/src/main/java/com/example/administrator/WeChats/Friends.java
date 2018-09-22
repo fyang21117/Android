@@ -1,6 +1,8 @@
 package com.example.administrator.WeChats;
 
-public class Friends {
+import org.litepal.crud.LitePalSupport;
+
+public class Friends extends LitePalSupport{
     private int id;
     private String name;
     private double number;

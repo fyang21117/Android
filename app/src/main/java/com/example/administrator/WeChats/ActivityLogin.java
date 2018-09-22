@@ -16,17 +16,21 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity
+public class ActivityLogin extends AppCompatActivity
 {
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private CheckBox rememberPass;
     private EditText accountEdit;
     private EditText passwordEdit;
-    private Button login;
     private NetworkChangeReceiver networkChangeReceiver;
     Boolean network_status;
 
+    public  static  void actionStart(Context context)
+    {
+        Intent intent = new Intent(context,ActivityLogin.class);
+        context.startActivity(intent);
+    }
     @Override
     protected  void onCreate(Bundle savedInstaceState)
     {
@@ -42,7 +46,7 @@ public class LoginActivity extends AppCompatActivity
         accountEdit = findViewById(R.id.account);
         passwordEdit = findViewById(R.id.password);
         rememberPass = findViewById(R.id.remember_pass);
-        login = findViewById(R.id.login);
+        Button login = findViewById(R.id.login);
 
         boolean isRemember = pref.getBoolean("remember_password",false);
         if(isRemember){
@@ -67,14 +71,15 @@ public class LoginActivity extends AppCompatActivity
                          {    editor.clear();   }
                     editor.apply();
 
-                    Intent login = new Intent(LoginActivity.this,WeChatActivity.class);
+
+                    Intent login = new Intent(ActivityLogin.this,ActivityWeChat.class);
                     startActivity(login);
                     finish();
                 }
                 else if(!network_status)
-                     { Toast.makeText(LoginActivity.this,"network is invalid",Toast.LENGTH_SHORT).show(); }
+                     { Toast.makeText(ActivityLogin.this,"network is invalid",Toast.LENGTH_SHORT).show(); }
                 else
-                    { Toast.makeText(LoginActivity.this,"account or password is invalid",Toast.LENGTH_SHORT).show(); }
+                    { Toast.makeText(ActivityLogin.this,"account or password is invalid",Toast.LENGTH_SHORT).show(); }
             }
         });
     }

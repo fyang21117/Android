@@ -4,6 +4,7 @@
     <string name="Account">Account</string>
     <string name="Password">Password</string>
     <string name="Login">Login</string>
+    <string name="hint">Type something here</string>
     <string name="Send">Send</string>
     <string name="More">More</string>
     <string name="title_back">back</string>
@@ -26,6 +27,7 @@
     <string name="souyisou">搜一搜</string>
     <string name="pengyouquan">朋友圈</string>
     <string name="createdb">创建数据库</string>
+    <string name="addData">添加数据</string>
     <string name="circle_photo">circle_photo</string>
     <string name="photo">photo</string>
 </resources>

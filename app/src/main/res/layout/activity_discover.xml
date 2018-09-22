@@ -25,6 +25,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/createdb"/>
+    <Button
+        android:id="@+id/addData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/addData"/>
+    <TextView
+        android:id="@+id/addDataView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/addData"/>
 
     <LinearLayout
         android:layout_gravity="bottom"

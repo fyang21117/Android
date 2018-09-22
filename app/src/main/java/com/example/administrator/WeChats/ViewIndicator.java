@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.example.administrator.WeChats.R;
 
 public class ViewIndicator extends LinearLayout implements View.OnClickListener {
-
         private int mDefaultIndicator = 0;                          // 默认的选定View
         private static int mCurIndicator;                           // 当前选定View
         private static View[] mIndicators;                          // View集合
@@ -48,8 +47,8 @@ iconResID图片资源;
 iconTag图片标签
 textTag文字标签
 */
-        private View createIndicator(int iconResID, int stringResID,
-                                     int stringColor, String iconTag, String textTag) {
+        private View createIndicator(int iconResID, int stringResID, int stringColor, String iconTag, String textTag)
+        {
            LinearLayout view = new LinearLayout(getContext());
             view.setOrientation(LinearLayout.VERTICAL);
             view.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
@@ -165,7 +164,7 @@ textTag文字标签
         }
 
         public interface OnIndicateListener {
-            public void onIndicate(View v, int which);
+             void onIndicate(View v, int which);
         }
 
         public void setOnIndicateListener(OnIndicateListener listener) {
@@ -181,26 +180,22 @@ textTag文字标签
                         if (mCurIndicator != 0) {
                             mOnIndicateListener.onIndicate(v, 0);
                             setIndicator(0);
-                        }
-                        break;
+                        }break;
                     case 1:
                         if (mCurIndicator != 1) {
                             mOnIndicateListener.onIndicate(v, 1);
                             setIndicator(1);
-                        }
-                        break;
+                        }break;
                     case 2:
                         if (mCurIndicator != 2) {
                             mOnIndicateListener.onIndicate(v, 2);
                             setIndicator(2);
-                        }
-                        break;
+                        }break;
                     case 3:
                         if (mCurIndicator != 3) {
                             mOnIndicateListener.onIndicate(v, 3);
                             setIndicator(3);
-                        }
-                        break;
+                        }break;
                     default:
                         break;
                 }

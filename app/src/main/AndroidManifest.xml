@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/wc_launcher"
         android:label="@string/app_name"
@@ -18,15 +17,15 @@
 
         android:theme="@style/AppTheme">
         <!--android:theme="@style/Theme.AppCompat">       //夜间模式-->
-        <activity android:name=".WeChatActivity" />
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".ContactsActivity" />
-        <activity android:name=".DiscoverActivity" />
-        <activity android:name=".MeActivity" />
+        <activity android:name=".ActivityWeChat" />
+        <activity android:name=".ActivityChat" />
+        <activity android:name=".ActivityContacts" />
+        <activity android:name=".ActivityDiscover" />
+        <activity android:name=".ActivityMe" />
 
-        <activity android:name=".CircleActivity" />
+        <activity android:name=".ActivityCircle" />
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".ActivityLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
