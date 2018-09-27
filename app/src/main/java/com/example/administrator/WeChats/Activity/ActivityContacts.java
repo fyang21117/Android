@@ -1,4 +1,4 @@
-package com.example.administrator.WeChats;
+package com.example.administrator.WeChats.Activity;
 
 import android.Manifest;
 import android.content.Context;
@@ -21,21 +21,26 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+//import com.example.administrator.WeChats.DataArrayAdapter;
+import com.example.administrator.WeChats.FragmentIndicator;
+import com.example.administrator.WeChats.R;
+import com.example.administrator.WeChats.ViewIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityContacts extends AppCompatActivity
-        implements ViewIndicator.OnIndicateListener,AdapterView.OnItemClickListener
+        implements AdapterView.OnItemClickListener//ViewIndicator.OnIndicateListener,
 {
-    public static Fragment[] mFragments;
+ //   public static Fragment[] mFragments;
     ArrayAdapter<String> contacts_adapter;
-    private List<String> contactsList=new ArrayList<>();
-
+    private List<String> contactsList=new ArrayList<>();//数据源
+    public static ViewIndicator mIndicator;
     public static void actionStart(Context context) {
         Intent intent=new Intent(context,ActivityContacts.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         context.startActivity(intent);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,27 +49,24 @@ public class ActivityContacts extends AppCompatActivity
         ActionBar actionBar=getSupportActionBar();
         if(actionBar !=null)
            actionBar.setDisplayHomeAsUpEnabled(false);
-        setFragmentIndicator(1);
- //       FragmentIndicator contacts_fragment=new FragmentIndicator();
- //       contacts_fragment.setFragmentIndicator(ActivityContacts.this,1);
 
+         mIndicator = findViewById(R.id.indicator);
+ //       ViewIndicator.setIndicator(1);
+        FragmentIndicator.setFragmentIndicator(1);
+//-------------------- readContacts-----------------------------------------------------
         ListView ContactsView = findViewById(R.id.contacts_view);
         contacts_adapter = new ArrayAdapter<>(ActivityContacts.this, android.R.layout.simple_list_item_1, contactsList);
         ContactsView.setAdapter(contacts_adapter);
-
-        if (ContextCompat.checkSelfPermission(ActivityContacts.this,
-                Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(ActivityContacts.this,
-                    new String[]{Manifest.permission.READ_CONTACTS}, 2);
-        }
-        else
+        if (ContextCompat.checkSelfPermission(ActivityContacts.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(ActivityContacts.this,new String[]{Manifest.permission.READ_CONTACTS}, 2);
+         else
             readContacts();
         ContactsView.setOnItemClickListener(this);
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ActivityContacts.this,"displayname",Toast.LENGTH_SHORT).show();
+        String text = parent.getItemAtPosition(position) + "";// 指定位置的内容
+        Toast.makeText(ActivityContacts.this,text,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -105,7 +107,8 @@ public class ActivityContacts extends AppCompatActivity
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permission,@NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,
+            @NonNull String[] permission,@NonNull int[] grantResults) {
         switch (requestCode) {
             case 2:
                 if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
@@ -116,26 +119,26 @@ public class ActivityContacts extends AppCompatActivity
     }
 
 
-    public void setFragmentIndicator(int whichIsDefault)  {
+/*    public void setFragmentIndicator(int whichIsDefault)  {
         mFragments = new Fragment[4];
         mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
         mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
         mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
         mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
-//      getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
+        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
         ViewIndicator mIndicator =  findViewById(R.id.indicator);
         ViewIndicator.setIndicator(whichIsDefault);
         mIndicator.setOnIndicateListener(this);
     }
-
         @Override
         public void onIndicate(View v, int which) {
             getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
             switch (which) {
-                case 0:
-                    ActivityWeChat.actionStart(this);
+                case 0:ActivityWeChat.actionStart(this);
                     break;
-                case 1: break;
+                case 1:
+                    ActivityContacts.actionStart(this);
+                    break;
                 case 2:
                     ActivityDiscover.actionStart(this);
                     break;
@@ -144,5 +147,5 @@ public class ActivityContacts extends AppCompatActivity
                     break;
                 default:break;
             }
-        }
+        }*/
 }

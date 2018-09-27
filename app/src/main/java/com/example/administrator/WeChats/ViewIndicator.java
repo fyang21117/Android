@@ -10,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.administrator.WeChats.R;
-
 public class ViewIndicator extends LinearLayout implements View.OnClickListener {
         private int mDefaultIndicator = 0;                          // 默认的选定View
         private static int mCurIndicator;                           // 当前选定View
@@ -27,7 +25,7 @@ public class ViewIndicator extends LinearLayout implements View.OnClickListener 
         private static final String TAG_TEXT_2 = "text_tag_2";
         private static final String TAG_TEXT_3 = "text_tag_3";
 
-        private static final int COLOR_UNSELECT = Color.BLACK;
+        private static final int COLOR_UNSELECT = Color.GRAY;
         private static final int COLOR_SELECT = Color.BLACK;
 
         public ViewIndicator(Context context) {
@@ -60,7 +58,6 @@ textTag文字标签
             iconView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
             iconView.setImageResource(iconResID);
 
-
            TextView textView = new TextView(getContext());
             textView.setTag(textTag);
             textView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
@@ -87,7 +84,7 @@ textTag文字标签
             mIndicators[1].setOnClickListener(this);
             addView(mIndicators[1]);
 
-            mIndicators[2] = createIndicator(R.mipmap.discover_focus, R.string.tab_item_down, COLOR_UNSELECT, TAG_ICON_2, TAG_TEXT_2);
+            mIndicators[2] = createIndicator(R.mipmap.discover_normal, R.string.tab_item_down, COLOR_UNSELECT, TAG_ICON_2, TAG_TEXT_2);
             mIndicators[2].setBackgroundResource(R.drawable.indicator_bg);
             mIndicators[2].setTag(Integer.valueOf(2));
             mIndicators[2].setOnClickListener(this);
@@ -149,7 +146,7 @@ textTag文字标签
                     break;
                 case 2:
                     currIcon =  mIndicators[which].findViewWithTag(TAG_ICON_2);
-                    currIcon.setImageResource(R.mipmap.discover_normal);
+                    currIcon.setImageResource(R.mipmap.discover_focus);
                     currText =  mIndicators[which].findViewWithTag(TAG_TEXT_2);
                     currText.setTextColor(COLOR_SELECT);
                     break;

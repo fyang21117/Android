@@ -1,4 +1,4 @@
-package com.example.administrator.WeChats;
+package com.example.administrator.WeChats.data;
 
 public class Msg
 {

@@ -1,69 +1,54 @@
 package com.example.administrator.WeChats;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
-import android.widget.Toast;
+import com.example.administrator.WeChats.Activity.ActivityContacts;
+import com.example.administrator.WeChats.Activity.ActivityDiscover;
+import com.example.administrator.WeChats.Activity.ActivityMe;
+import com.example.administrator.WeChats.Activity.ActivityWeChat;
 
-
-public class FragmentIndicator extends Fragment implements ViewIndicator.OnIndicateListener
+public class FragmentIndicator extends Fragment
 {
     public static Fragment[] mFragments;
-
-    public void onCreate(){}                        //考虑用
-
+    public Context context=getContext();
+    public static FragmentManager fm;
     public FragmentIndicator(){                     //创建对象，至少调用一个构造方法，与类同名
-        //     super.getContext();
+            super.getContext();
     }
 
-    public  void setFragmentIndicator(  Activity activity, int whichIsDefault)
-    {
+    public static ViewIndicator mIndicator;
+
+    public  static void setFragmentIndicator( int whichIsDefault) {
+
         mFragments = new Fragment[4];
-        mFragments[0] = getFragmentManager().findFragmentById(R.id.fragment_wechat);
-        mFragments[1] = getFragmentManager().findFragmentById(R.id.fragment_contacts);
-        mFragments[2] = getFragmentManager().findFragmentById(R.id.fragment_discover);
-        mFragments[3] = getFragmentManager().findFragmentById(R.id.fragment_me);
+        mFragments[0] = fm.findFragmentById(R.id.fragment_wechat);
+        mFragments[1] = fm.findFragmentById(R.id.fragment_contacts);
+        mFragments[2] = fm.findFragmentById(R.id.fragment_discover);
+        mFragments[3] = fm.findFragmentById(R.id.fragment_me);
+        fm.beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
 
-        getFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
-                .show(mFragments[whichIsDefault]).commit();                 //显示默认的Fragment
-
-        ViewIndicator mIndicator = activity.findViewById(R.id.indicator);   //隶属那个活动用findviewbyid();
         ViewIndicator.setIndicator(whichIsDefault);
-        mIndicator.setOnIndicateListener(this);
-    }
-
-    @Override
-    public void onIndicate(View v, int which)
-    {
-        getFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3])
-                        .show(mFragments[which]).commit();
+        mIndicator.setOnIndicateListener(new ViewIndicator.OnIndicateListener() {
+            @Override
+            public void onIndicate(View v, int which) {
+                fm.beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
                 switch (which) {
                     case 0:
-             //           ActivityWeChat.actionStart(this);
-                        Toast.makeText(getContext(),"wechat",Toast.LENGTH_SHORT).show();
-                        Intent i0 = new Intent(getContext(), ActivityWeChat.class);
-                        i0.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i0);
+                        ActivityWeChat.actionStart(v.getContext());
                         break;
                     case 1:
-                        Toast.makeText(getContext(),"contacts",Toast.LENGTH_SHORT).show();
-                        Intent i1 = new Intent(getContext(), ActivityContacts.class);
-                        i1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i1);
+                        ActivityContacts.actionStart(v.getContext());
                         break;
                     case 2:
-                        Toast.makeText(getContext(), "discover", Toast.LENGTH_SHORT).show();
-                        Intent i2 = new Intent(getContext(), ActivityDiscover.class);
-                        i2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i2);
+                        ActivityDiscover.actionStart(v.getContext());
                         break;
                     case 3:
-                        Toast.makeText(getContext(), "me", Toast.LENGTH_SHORT).show();
-                        Intent i3 = new Intent(getContext(), ActivityMe.class);
-                        i3.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(i3);
+                        ActivityMe.actionStart(v.getContext());
                         break;
                 }
+            }
+        });
     }
 }

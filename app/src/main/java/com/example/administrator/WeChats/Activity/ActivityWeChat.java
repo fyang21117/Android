@@ -1,4 +1,4 @@
-package com.example.administrator.WeChats;
+package com.example.administrator.WeChats.Activity;
 
 import android.Manifest;
 import android.content.Context;
@@ -20,15 +20,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.example.administrator.WeChats.R;
+import com.example.administrator.WeChats.ViewIndicator;
+import com.example.administrator.WeChats.data.Chats;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityWeChat extends AppCompatActivity
-        implements AdapterView.OnItemClickListener,ViewIndicator.OnIndicateListener
+        implements ViewIndicator.OnIndicateListener,AdapterView.OnItemClickListener
 {
+    public static String number;
+    public static  String displayName;
     public static Fragment[] mFragments;
-//    private FragmentIndicator wechat_fragment;            //定义
     ArrayAdapter<String>talk_adapter;
     private List<String> talkList   = new ArrayList<>();
 
@@ -37,23 +43,20 @@ public class ActivityWeChat extends AppCompatActivity
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         context.startActivity(intent);
     }
-
     @Override
     protected void onCreate(Bundle savedInstaceState) {
         super.onCreate(savedInstaceState);
         setContentView(R.layout.activity_wechat);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(false);//返回箭头
+//---------------------------------------------------------
         setFragmentIndicator(0);
-
-        ActionBar actionBar=getSupportActionBar();
-        if(actionBar !=null) {
-                actionBar.setDisplayHomeAsUpEnabled(false);//返回箭头
-        }
- //       wechat_fragment=new FragmentIndicator();
-//        wechat_fragment.setFragmentIndicator(ActivityWeChat.this,0);
-
-        ListView talkView = findViewById(R.id.talk_view);
-        //talk_adapter = new ArrayAdapter<>(ActivityWeChat.this, android.R.layout.simple_list_item_1, talkList);
-        talk_adapter=new ArrayAdapter<>(ActivityWeChat.this, android.R.layout.simple_list_item_1, talkList);
+//        FragmentIndicator wechat_fragment=new FragmentIndicator();
+//        wechat_fragment.setFragmentIndicator(0);
+//---------------------------------------------------------
+        final ListView talkView = findViewById(R.id.talk_view);
+        talk_adapter = new ArrayAdapter<>(ActivityWeChat.this, android.R.layout.simple_list_item_1, talkList);
         talkView.setAdapter(talk_adapter);
         if (ContextCompat.checkSelfPermission(ActivityWeChat.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(ActivityWeChat.this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
@@ -61,10 +64,14 @@ public class ActivityWeChat extends AppCompatActivity
             readContacts();
         talkView.setOnItemClickListener(this);
     }
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String name = parent.getItemAtPosition(position)+ "";
+                ActivityTalk.actionStart(this,name);//传递name参数
+            }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.home_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -86,14 +93,8 @@ public class ActivityWeChat extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ActivityChat.actionStart(this);
-        finish();
-    }
 
-    private void readContacts()
-    {
+    private void readContacts() {
         Cursor cursor = null;
         try{
             cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,null,null,null);
@@ -101,10 +102,11 @@ public class ActivityWeChat extends AppCompatActivity
             {
                 while(cursor.moveToNext())
                 {
-                    String displayName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-                    String number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    displayName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                    number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                     talkList.add(displayName + "\n" + number);
-                }talk_adapter.notifyDataSetChanged();
+                }
+                talk_adapter.notifyDataSetChanged();
             }
         }catch (Exception e)    {e.printStackTrace();}
         finally {
@@ -120,35 +122,38 @@ public class ActivityWeChat extends AppCompatActivity
                     readContacts();
                 else
                     Toast.makeText(ActivityWeChat.this, "you denied the permission", Toast.LENGTH_SHORT).show();
+                break;
+        default:break;
         }
     }
 
-    private void setFragmentIndicator(int whichIsDefault) {                  //初始化fragment,always is 0
-        mFragments = new Fragment[4];
-        mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
-        mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
-        mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
-        mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
-        //getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit(); //显示默认的Fragment
-        ViewIndicator mIndicator = findViewById(R.id.indicator);           //绑定自定义的菜单栏组件
-        ViewIndicator.setIndicator(whichIsDefault);
-        mIndicator.setOnIndicateListener(this);
-    }
-            @Override
-            public void onIndicate(View v, int which) {
-                getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
-                    switch (which) {
-                        case 0: break;
-                        case 1:
-                            ActivityContacts.actionStart(this);
-                            break;
-                        case 2:
-                            ActivityDiscover.actionStart(this);
-                            break;
-                        case 3:
-                            ActivityMe.actionStart(this);
-                            break;
-                            default:break;
-                    }
-            }
+   public  void setFragmentIndicator(int whichIsDefault) { //初始化fragment,always is 0
+       mFragments = new Fragment[4];
+       mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
+       mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
+       mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
+       mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
+
+       getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit(); //显示默认的Fragment
+       ViewIndicator mIndicator = findViewById(R.id.indicator);           //绑定自定义的菜单栏组件
+       ViewIndicator.setIndicator(whichIsDefault);
+       mIndicator.setOnIndicateListener(this);
+   }
+           @Override
+           public void onIndicate(View v, int which) {
+               getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
+               switch (which) {
+                   case 0:ActivityWeChat.actionStart(this);
+                       break;
+                   case 1: ActivityContacts.actionStart(this);
+                       break;
+                   case 2: ActivityDiscover.actionStart(this);
+                       break;
+                   case 3: ActivityMe.actionStart(this);
+                       break;
+                   default:
+                       break;
+               }
+           }
+
 }

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.administrator.WeChats.data.Msg;
+
 import java.util.List;
 
 public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>
@@ -18,7 +20,7 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder>
         LinearLayout rightLayout;
         TextView leftMsg;
         TextView rightMsg;
-        public ViewHolder(View view)
+        private ViewHolder(View view)
         {
             super(view);
             leftLayout =  view.findViewById(R.id.left_layout);

@@ -1,4 +1,4 @@
-package com.example.administrator.WeChats;
+package com.example.administrator.WeChats.Activity;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -25,6 +25,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.administrator.WeChats.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;

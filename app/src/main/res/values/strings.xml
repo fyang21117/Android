@@ -7,6 +7,8 @@
     <string name="hint">Type something here</string>
     <string name="Send">Send</string>
     <string name="More">More</string>
+    <string name="talk_name">小明</string>
+    <string name="xiaoming">小明</string>
     <string name="title_back">back</string>
     <string name="title_text">text</string>
     <string name="title_edit">edit</string>

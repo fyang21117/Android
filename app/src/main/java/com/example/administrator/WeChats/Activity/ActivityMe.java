@@ -1,4 +1,4 @@
-package com.example.administrator.WeChats;
+package com.example.administrator.WeChats.Activity;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -15,6 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.administrator.WeChats.ActivityCollector;
+import com.example.administrator.WeChats.R;
+import com.example.administrator.WeChats.ViewIndicator;
 
 public class ActivityMe extends AppCompatActivity
         implements View.OnClickListener,ViewIndicator.OnIndicateListener
@@ -135,7 +139,7 @@ public class ActivityMe extends AppCompatActivity
         mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
         mFragments[2] = getSupportFragmentManager().findFragmentById(R.id.fragment_discover);
         mFragments[3] = getSupportFragmentManager().findFragmentById(R.id.fragment_me);
-//     getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1])//显示默认的Fragment.hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
+        getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[whichIsDefault]).commit();
 
         ViewIndicator mIndicator = findViewById(R.id.indicator);//绑定自定义的菜单栏组件
         ViewIndicator.setIndicator(whichIsDefault);
@@ -145,16 +149,14 @@ public class ActivityMe extends AppCompatActivity
             public void onIndicate(View v, int which) {
                 getSupportFragmentManager().beginTransaction().hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]).hide(mFragments[3]).show(mFragments[which]).commit();
                 switch (which) {
-                    case 0:
-                        ActivityWeChat.actionStart(this);
-                         break;
-                    case 1:
-                        ActivityContacts.actionStart(this);
+                    case 0:ActivityWeChat.actionStart(this);
                         break;
-                    case 2:
-                        ActivityDiscover.actionStart(this);
+                    case 1: ActivityContacts.actionStart(this);
                         break;
-                    case 3: break;
+                    case 2: ActivityDiscover.actionStart(this);
+                        break;
+                    case 3: ActivityMe.actionStart(this);
+                        break;
                     default:break;
                 }
             }

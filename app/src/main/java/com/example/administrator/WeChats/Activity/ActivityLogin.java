@@ -1,4 +1,4 @@
-package com.example.administrator.WeChats;
+package com.example.administrator.WeChats.Activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.administrator.WeChats.R;
 
 public class ActivityLogin extends AppCompatActivity
 {

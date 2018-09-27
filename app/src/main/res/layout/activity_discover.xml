@@ -43,25 +43,25 @@
         android:layout_height="match_parent">
         <fragment
             android:id="@+id/fragment_wechat"
-            android:name="com.example.administrator.WeChats.FragmentWeChat"
+            android:name="com.example.administrator.WeChats.Fragment.FragmentWeChat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
         <fragment
             android:id="@+id/fragment_contacts"
-            android:name="com.example.administrator.WeChats.FragmentContacts"
+            android:name="com.example.administrator.WeChats.Fragment.FragmentContacts"
             android:layout_width="match_parent"
             android:layout_height="0sp"
             android:layout_weight="1" />
         <fragment
             android:id="@+id/fragment_discover"
-            android:name="com.example.administrator.WeChats.FragmentDiscover"
+            android:name="com.example.administrator.WeChats.Fragment.FragmentDiscover"
             android:layout_width="match_parent"
             android:layout_height="0sp"
             android:layout_weight="1" />
         <fragment
             android:id="@+id/fragment_me"
-            android:name="com.example.administrator.WeChats.FragmentMe"
+            android:name="com.example.administrator.WeChats.Fragment.FragmentMe"
             android:layout_width="match_parent"
             android:layout_height="0sp"
             android:layout_weight="1" />

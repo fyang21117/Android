@@ -1,9 +1,11 @@
-package com.example.administrator.WeChats;
+package com.example.administrator.WeChats.Activity;
 
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +18,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.administrator.WeChats.R;
+import com.example.administrator.WeChats.data.Msg;
+import com.example.administrator.WeChats.MsgAdapter;
+
+
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -26,40 +35,45 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityChat extends AppCompatActivity
+public class ActivityTalk extends AppCompatActivity
         implements View.OnClickListener
 {
+    public static String number;
+    public static  String displayName;
     private List<Msg> msgList = new ArrayList<>();
     private EditText inputText;
     private RecyclerView msgRecyclerView;
     private MsgAdapter chat_adapter;
-    public static void actionStart(Context context) {
-        Intent intent = new Intent(context,ActivityChat.class);
+    public static void actionStart(Context context,String string) {
+        Intent intent = new Intent(context,ActivityTalk.class);
         context.startActivity(intent);
+        displayName=string;
     }
 
     @Override
     protected void onCreate(Bundle savedInstaceState) {
         super.onCreate(savedInstaceState);
         setContentView(R.layout.activity_talk);
-
+        //-------------------------------------------------------
         ActionBar actionBar=getSupportActionBar();
-        if(actionBar!=null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
-
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(displayName);
+        //--------------------------------------------------------
         inputText = findViewById(R.id.input_text);
         String input_Text = load();
         if (!TextUtils.isEmpty(input_Text)) {
             inputText.setText(input_Text);
             inputText.setSelection(input_Text.length());
-            Toast.makeText(ActivityChat.this, "Restoring succeeded", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActivityTalk.this, "Restoring succeeded", Toast.LENGTH_SHORT).show();
         }
         //------------------------Msgs------------------------------
         initMsgs();
-        LinearLayoutManager chat_layoutManager = new LinearLayoutManager(ActivityChat.this);
+        LinearLayoutManager chat_layoutManager = new LinearLayoutManager(ActivityTalk.this);
         chat_adapter = new MsgAdapter(msgList);
 
-        msgRecyclerView = findViewById(R.id.msg_recycler_view);//922
+        msgRecyclerView = findViewById(R.id.msg_recycler_view);
         msgRecyclerView.setLayoutManager(chat_layoutManager);
         msgRecyclerView.setAdapter(chat_adapter);
 
@@ -85,7 +99,7 @@ public class ActivityChat extends AppCompatActivity
         }
     }
     private void initMsgs() {
-        for(int i=0;i<6;i++) {
+        for(int i=0;i<3;i++) {
             Msg msg1 = new Msg("hello QQdemo.", Msg.TYPE_RECEIVED);
             msgList.add(msg1);
             Msg msg2 = new Msg("2018/5/26 22:04.", Msg.TYPE_SENT);
@@ -130,7 +144,9 @@ public class ActivityChat extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                ActivityWeChat.actionStart(this);
+                Intent intent= new Intent(ActivityTalk.this,ActivityWeChat.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 break;
             default :break;
         }

@@ -10,22 +10,29 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/wc_launcher"
         android:label="@string/app_name"
+        android:icon="@mipmap/wc_launcher"
         android:roundIcon="@mipmap/wc_launcher_circle"
         android:supportsRtl="true"
 
         android:theme="@style/AppTheme">
         <!--android:theme="@style/Theme.AppCompat">       //夜间模式-->
-        <activity android:name=".ActivityWeChat" />
-        <activity android:name=".ActivityChat" />
-        <activity android:name=".ActivityContacts" />
-        <activity android:name=".ActivityDiscover" />
-        <activity android:name=".ActivityMe" />
+        <activity android:name=".Activity.ActivityWeChat">
+        </activity>
 
-        <activity android:name=".ActivityCircle" />
+        <activity android:name=".Activity.ActivityTalk">
+        </activity>
 
-        <activity android:name=".ActivityLogin">
+        <activity android:name=".Activity.ActivityContacts" />
+
+        <activity android:name=".Activity.ActivityDiscover">
+        </activity>
+        <activity android:name=".Activity.ActivityMe" />
+        <activity android:name=".Activity.ActivityCircle"
+            android:label="@string/pengyouquan">
+        </activity>
+
+        <activity android:name=".Activity.ActivityLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,6 +51,7 @@
 
             </meta-data>
         </provider>
+
     </application>
 
 </manifest>
