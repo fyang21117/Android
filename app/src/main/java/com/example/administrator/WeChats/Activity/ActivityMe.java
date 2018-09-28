@@ -39,10 +39,8 @@ public class ActivityMe extends AppCompatActivity
         ActionBar actionBar=getSupportActionBar();
         if(actionBar!=null)
            actionBar.setDisplayHomeAsUpEnabled(false);
-        setFragmentIndicator(3);
-//        FragmentIndicator me_fragment=new FragmentIndicator();
-//        me_fragment.setFragmentIndicator(ActivityMe.this,3);
 
+        setFragmentIndicator(3);
         //--------------------------------------------
         Button forceOffline = findViewById(R.id.forceoffline);
         Button about_me = findViewById(R.id.about_me);

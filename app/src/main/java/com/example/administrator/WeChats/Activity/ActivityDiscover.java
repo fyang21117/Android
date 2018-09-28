@@ -1,6 +1,7 @@
 package com.example.administrator.WeChats.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -9,47 +10,55 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.administrator.WeChats.DataArrayAdapter;
 import com.example.administrator.WeChats.FragmentIndicator;
 import com.example.administrator.WeChats.R;
 import com.example.administrator.WeChats.ViewIndicator;
+import com.example.administrator.WeChats.data.Friends;
+
+import org.litepal.LitePal;
+import org.litepal.tablemanager.Connector;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.administrator.WeChats.FragmentIndicator.setFragmentIndicator;
 
 public class ActivityDiscover extends AppCompatActivity
-        implements View.OnClickListener//,ViewIndicator.OnIndicateListener
+        implements View.OnClickListener,ViewIndicator.OnIndicateListener
 {
-//    public static Fragment[] mFragments;
+    public static Fragment[] mFragments;
     public static ViewIndicator mIndicator;
     public static void actionStart(Context context) {
         Intent intent=new Intent(context,ActivityDiscover.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         context.startActivity(intent);
     }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
         ActionBar actionBar=getSupportActionBar();
         if(actionBar !=null)
             actionBar.setDisplayHomeAsUpEnabled(false);
-        //setFragmentIndicator(2);
 
-        mIndicator = findViewById(R.id.indicator);
-        FragmentIndicator.setFragmentIndicator(2);
+        setFragmentIndicator(2);
+        //mIndicator = findViewById(R.id.indicator);
+        //FragmentIndicator.setFragmentIndicator(2);
 
-        TextView textView  = findViewById(R.id.addDataView);
         Button circle = findViewById(R.id.circle);
         Button scan = findViewById(R.id.scan);
         Button search = findViewById(R.id.search);
-        Button createDatabase = findViewById(R.id.createdb);
-        Button addData =findViewById(R.id.addData);
+        Button dataActivity = findViewById(R.id.dataActivity);
         circle.setOnClickListener(this);
         scan.setOnClickListener(this);
         search.setOnClickListener(this);
-        createDatabase.setOnClickListener(this);
-        addData.setOnClickListener(this);
+        dataActivity.setOnClickListener(this);
     }
 
     @Override
@@ -66,18 +75,9 @@ public class ActivityDiscover extends AppCompatActivity
             {
                 Toast.makeText(this,"search",Toast.LENGTH_SHORT).show();
             }break;
-            case R.id.createdb:
+            case R.id.dataActivity:
             {
-//                LitePal.getDatabase();
-            }break;
-            case R.id.addData:
-            {
-//                Friends f = new Friends();
-//                f.setId(1995);
-//                f.setName("old friends");
-//                f.setNumber(11);
-//                f.setSex(true);
-//                f.save();
+                DataActivity.actionStart(this);
             }break;
             default :break;
         }
@@ -104,7 +104,8 @@ public class ActivityDiscover extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-/*    private void setFragmentIndicator(int whichIsDefault) {
+
+    private void setFragmentIndicator(int whichIsDefault) {
         mFragments = new Fragment[4];
         mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
         mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
@@ -132,5 +133,5 @@ public class ActivityDiscover extends AppCompatActivity
                         break;
                     default:break;
                 }
-            }*/
+            }
 }

@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import static java.lang.Integer.valueOf;
+
 public class ViewIndicator extends LinearLayout implements View.OnClickListener {
         private int mDefaultIndicator = 0;                          // 默认的选定View
         private static int mCurIndicator;                           // 当前选定View
@@ -74,31 +76,32 @@ textTag文字标签
             mIndicators = new View[4];
             mIndicators[0] = createIndicator(R.mipmap.chats_focus, R.string.tab_item_home, COLOR_SELECT, TAG_ICON_0, TAG_TEXT_0);
             mIndicators[0].setBackgroundResource(R.drawable.indicator_bg);
-            mIndicators[0].setTag(Integer.valueOf(0));
+            mIndicators[0].setTag(valueOf(0));
             mIndicators[0].setOnClickListener(this);
             addView(mIndicators[0]);
 
             mIndicators[1] = createIndicator(R.mipmap.contacts_normal, R.string.tab_item_category, COLOR_UNSELECT, TAG_ICON_1, TAG_TEXT_1);
             mIndicators[1].setBackgroundResource(R.drawable.indicator_bg);
-            mIndicators[1].setTag(Integer.valueOf(1));
+            mIndicators[1].setTag(valueOf(1));
             mIndicators[1].setOnClickListener(this);
             addView(mIndicators[1]);
 
             mIndicators[2] = createIndicator(R.mipmap.discover_normal, R.string.tab_item_down, COLOR_UNSELECT, TAG_ICON_2, TAG_TEXT_2);
             mIndicators[2].setBackgroundResource(R.drawable.indicator_bg);
-            mIndicators[2].setTag(Integer.valueOf(2));
+            mIndicators[2].setTag(valueOf(2));
             mIndicators[2].setOnClickListener(this);
             addView(mIndicators[2]);
 
             mIndicators[3] = createIndicator(R.mipmap.me_normal, R.string.tab_item_user, COLOR_UNSELECT, TAG_ICON_3, TAG_TEXT_3);
             mIndicators[3].setBackgroundResource(R.drawable.indicator_bg);
-            mIndicators[3].setTag(Integer.valueOf(3));
+            mIndicators[3].setTag(valueOf(3));
             mIndicators[3].setOnClickListener(this);
             addView(mIndicators[3]);
         }
 
         public static void setIndicator(int which) {
-            //清除之前状态// mIndicators[mCurIndicator].setBackgroundResource(R.drawable.main_tab_item_bg_normal);
+            //清除之前状态
+            mIndicators[mCurIndicator].setBackgroundResource(R.drawable.indicator_bg_normal);
             ImageView prevIcon;
             TextView prevText;
             switch (mCurIndicator) {
@@ -128,7 +131,7 @@ textTag文字标签
                     break;
             }
             // /////////////////更新前状态/////////////////////////////////
-            // mIndicators[which].setBackgroundResource(R.drawable.main_tab_item_bg_focus);
+            mIndicators[which].setBackgroundResource(R.drawable.indicator_bg_focus);
             ImageView currIcon;
             TextView currText;
             switch (which) {

@@ -22,16 +22,17 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 //import com.example.administrator.WeChats.DataArrayAdapter;
-import com.example.administrator.WeChats.FragmentIndicator;
 import com.example.administrator.WeChats.R;
 import com.example.administrator.WeChats.ViewIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.administrator.WeChats.FragmentIndicator.setFragmentIndicator;
+
 public class ActivityContacts extends AppCompatActivity
-        implements AdapterView.OnItemClickListener//ViewIndicator.OnIndicateListener,
+        implements AdapterView.OnItemClickListener,ViewIndicator.OnIndicateListener
 {
- //   public static Fragment[] mFragments;
+   public static Fragment[] mFragments;
     ArrayAdapter<String> contacts_adapter;
     private List<String> contactsList=new ArrayList<>();//数据源
     public static ViewIndicator mIndicator;
@@ -49,10 +50,6 @@ public class ActivityContacts extends AppCompatActivity
         ActionBar actionBar=getSupportActionBar();
         if(actionBar !=null)
            actionBar.setDisplayHomeAsUpEnabled(false);
-
-         mIndicator = findViewById(R.id.indicator);
- //       ViewIndicator.setIndicator(1);
-        FragmentIndicator.setFragmentIndicator(1);
 //-------------------- readContacts-----------------------------------------------------
         ListView ContactsView = findViewById(R.id.contacts_view);
         contacts_adapter = new ArrayAdapter<>(ActivityContacts.this, android.R.layout.simple_list_item_1, contactsList);
@@ -62,7 +59,12 @@ public class ActivityContacts extends AppCompatActivity
          else
             readContacts();
         ContactsView.setOnItemClickListener(this);
+
+        setFragmentIndicator(1);
+        //mIndicator = findViewById(R.id.indicator);
+        //FragmentIndicator.setFragmentIndicator(1);
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position) + "";// 指定位置的内容
@@ -119,7 +121,7 @@ public class ActivityContacts extends AppCompatActivity
     }
 
 
-/*    public void setFragmentIndicator(int whichIsDefault)  {
+    public void setFragmentIndicator(int whichIsDefault)  {
         mFragments = new Fragment[4];
         mFragments[0] = getSupportFragmentManager().findFragmentById(R.id.fragment_wechat);
         mFragments[1] = getSupportFragmentManager().findFragmentById(R.id.fragment_contacts);
@@ -147,5 +149,5 @@ public class ActivityContacts extends AppCompatActivity
                     break;
                 default:break;
             }
-        }*/
+        }
 }

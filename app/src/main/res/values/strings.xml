@@ -8,7 +8,6 @@
     <string name="Send">Send</string>
     <string name="More">More</string>
     <string name="talk_name">小明</string>
-    <string name="xiaoming">小明</string>
     <string name="title_back">back</string>
     <string name="title_text">text</string>
     <string name="title_edit">edit</string>
@@ -30,6 +29,7 @@
     <string name="pengyouquan">朋友圈</string>
     <string name="createdb">创建数据库</string>
     <string name="addData">添加数据</string>
+    <string name="deleteData">删除数据</string>
     <string name="circle_photo">circle_photo</string>
     <string name="photo">photo</string>
 </resources>

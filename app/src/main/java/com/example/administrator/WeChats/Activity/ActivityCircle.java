@@ -57,9 +57,8 @@ public class ActivityCircle extends AppCompatActivity
 
       ImageView  circle_photo = findViewById(R.id.circle_photo);
       photo = findViewById(R.id.photo);
-
-        circle_photo.setOnClickListener(this);
-        photo.setOnClickListener(this);
+      circle_photo.setOnClickListener(this);
+      photo.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {

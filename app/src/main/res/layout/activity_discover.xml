@@ -4,6 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
     <Button
         android:id="@+id/circle"
         android:layout_width="match_parent"
@@ -20,21 +24,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/souyisou"/>
-    <Button
-        android:id="@+id/createdb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/createdb"/>
-    <Button
-        android:id="@+id/addData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/addData"/>
-    <TextView
-        android:id="@+id/addDataView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/addData"/>
+        <Button
+            android:id="@+id/dataActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="dataActivity"/>
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_gravity="bottom"
