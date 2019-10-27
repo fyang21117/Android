@@ -11,6 +11,9 @@ public class Friends extends LitePalSupport{
     public int getId() {
         return id;
     }
+    public int deleteId(){
+        return id-1;
+    }
     public String getName() {
         return name;
     }

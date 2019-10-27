@@ -73,7 +73,6 @@ public class ActivityLogin extends AppCompatActivity
                          {    editor.clear();   }
                     editor.apply();
 
-
                     Intent login = new Intent(ActivityLogin.this,ActivityWeChat.class);
                     startActivity(login);
                     finish();

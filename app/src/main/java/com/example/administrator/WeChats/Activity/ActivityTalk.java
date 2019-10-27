@@ -1,6 +1,4 @@
 package com.example.administrator.WeChats.Activity;
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -54,12 +52,14 @@ public class ActivityTalk extends AppCompatActivity
     protected void onCreate(Bundle savedInstaceState) {
         super.onCreate(savedInstaceState);
         setContentView(R.layout.activity_talk);
+
         //-------------------------------------------------------
         ActionBar actionBar=getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(displayName);
+
         //--------------------------------------------------------
         inputText = findViewById(R.id.input_text);
         String input_Text = load();
@@ -68,6 +68,7 @@ public class ActivityTalk extends AppCompatActivity
             inputText.setSelection(input_Text.length());
             Toast.makeText(ActivityTalk.this, "Restoring succeeded", Toast.LENGTH_SHORT).show();
         }
+
         //------------------------Msgs------------------------------
         initMsgs();
         LinearLayoutManager chat_layoutManager = new LinearLayoutManager(ActivityTalk.this);
@@ -102,9 +103,9 @@ public class ActivityTalk extends AppCompatActivity
         for(int i=0;i<3;i++) {
             Msg msg1 = new Msg("hello QQdemo.", Msg.TYPE_RECEIVED);
             msgList.add(msg1);
-            Msg msg2 = new Msg("2018/5/26 22:04.", Msg.TYPE_SENT);
+            Msg msg2 = new Msg("2019/7/26 22:04.", Msg.TYPE_SENT);
             msgList.add(msg2);
-            Msg msg3 = new Msg("this is 1043 day for us.", Msg.TYPE_RECEIVED);
+            Msg msg3 = new Msg("这是一个例子", Msg.TYPE_RECEIVED);
             msgList.add(msg3);
         }
     }
