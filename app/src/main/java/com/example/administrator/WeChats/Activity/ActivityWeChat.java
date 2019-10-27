@@ -29,8 +29,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityWeChat extends AppCompatActivity
-        implements ViewIndicator.OnIndicateListener,AdapterView.OnItemClickListener
+public class ActivityWeChat extends AppCompatActivity implements ViewIndicator.OnIndicateListener,AdapterView.OnItemClickListener
 {
     public static String number;
     public static  String displayName;
@@ -39,27 +38,34 @@ public class ActivityWeChat extends AppCompatActivity
     private List<String> talkList   = new ArrayList<>();
 
     public static  void actionStart(Context context) {
-        Intent intent= new Intent(context,ActivityWeChat.class);
+        Intent intent= new Intent(context , ActivityWeChat.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         context.startActivity(intent);
     }
+
     @Override
     protected void onCreate(Bundle savedInstaceState) {
         super.onCreate(savedInstaceState);
         setContentView(R.layout.activity_wechat);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(false);//返回箭头
+
 //---------------------------------------------------------
         setFragmentIndicator(0);
 //        FragmentIndicator wechat_fragment=new FragmentIndicator();
 //        wechat_fragment.setFragmentIndicator(0);
 //---------------------------------------------------------
         final ListView talkView = findViewById(R.id.talk_view);
-        talk_adapter = new ArrayAdapter<>(ActivityWeChat.this, android.R.layout.simple_list_item_1, talkList);
+        talk_adapter = new ArrayAdapter<>(ActivityWeChat.this,
+                android.R.layout.simple_list_item_1, talkList);
         talkView.setAdapter(talk_adapter);
-        if (ContextCompat.checkSelfPermission(ActivityWeChat.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(ActivityWeChat.this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
+
+        if (ContextCompat.checkSelfPermission(ActivityWeChat.this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(ActivityWeChat.this,
+                    new String[]{Manifest.permission.READ_CONTACTS}, 1);
         else
             readContacts();
         talkView.setOnItemClickListener(this);
@@ -81,11 +87,11 @@ public class ActivityWeChat extends AppCompatActivity
         switch (item.getItemId())
         {
             case R.id.menu_search:
-            {
+            {//activity_menu_search
                 Toast.makeText(this,"menu_search",Toast.LENGTH_SHORT).show();
             }break;
             case R.id.menu_add:
-            {
+            {//activity_menu_add
                Toast.makeText(this,"menu_add",Toast.LENGTH_SHORT).show();
             }break;
             default :break;
@@ -94,10 +100,14 @@ public class ActivityWeChat extends AppCompatActivity
     }
 
 
+    private static final String PHONE_BOOK_LABEL = "phonebook_label";//返回联系人名称的首字母
     private void readContacts() {
         Cursor cursor = null;
+        String[] projection = new String[] { ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER, PHONE_BOOK_LABEL};
+        String sortOrder = ContactsContract.Contacts.Photo.SORT_KEY_PRIMARY+ " ASC";//DESC
         try{
-            cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,null,null,null);
+            cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection,null,null,sortOrder);
             if(cursor != null)
             {
                 while(cursor.moveToNext())
@@ -113,6 +123,7 @@ public class ActivityWeChat extends AppCompatActivity
             if(cursor!=null)    cursor.close();
         }
     }
+
 
     @Override
     public void  onRequestPermissionsResult(int requestCode, @NonNull String[] permission,@NonNull int[] grantResults) {
@@ -155,5 +166,4 @@ public class ActivityWeChat extends AppCompatActivity
                        break;
                }
            }
-
 }
