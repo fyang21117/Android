@@ -5,70 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<include layout="@layout/chat_title" />-->
-    <Button
-        android:id="@+id/about_me"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="left"
-        android:text="About me"/>
-    <Button
-        android:id="@+id/settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:text="systems"/>
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="logout"/>
-    <Button
-        android:id="@+id/forceoffline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="force_offline"/>
-
-
-    <LinearLayout
+    <TextView
+        android:text="这是测试页面activity_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.example.administrator.WeChats.ViewIndicator
+        android:id="@+id/indicator"
         android:layout_gravity="bottom"
-        android:gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <fragment
-            android:id="@+id/fragment_wechat"
-            android:name="com.example.administrator.WeChats.Fragment.FragmentWeChat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-        <fragment
-            android:id="@+id/fragment_contacts"
-            android:name="com.example.administrator.WeChats.Fragment.FragmentContacts"
-            android:layout_width="match_parent"
-            android:layout_height="0sp"
-            android:layout_weight="1" />
-        <fragment
-            android:id="@+id/fragment_discover"
-            android:name="com.example.administrator.WeChats.Fragment.FragmentDiscover"
-            android:layout_width="match_parent"
-            android:layout_height="0sp"
-            android:layout_weight="1" />
-        <fragment
-            android:id="@+id/fragment_me"
-            android:name="com.example.administrator.WeChats.Fragment.FragmentMe"
-            android:layout_width="match_parent"
-            android:layout_height="0sp"
-            android:layout_weight="1" />
-
-        <com.example.administrator.WeChats.ViewIndicator
-            android:id="@+id/indicator"
-            android:layout_gravity="bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </com.example.administrator.WeChats.ViewIndicator>
-    </LinearLayout>
-
+        android:layout_height="wrap_content" >
+    </com.example.administrator.WeChats.ViewIndicator>
 </LinearLayout>

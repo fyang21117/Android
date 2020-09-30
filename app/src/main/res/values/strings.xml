@@ -4,6 +4,7 @@
     <string name="Account">Account</string>
     <string name="Password">Password</string>
     <string name="Login">Login</string>
+    <string name="AutoLogin">AutoLogin</string>
     <string name="hint">Type something here</string>
     <string name="Send">Send</string>
     <string name="More">More</string>
@@ -20,10 +21,10 @@
     <string name="add">add</string>
     <string name="select_photo">select_photo</string>
     <string name="take_photo">take_photo</string>
-    <string name="tab_item_home">"微信"</string>
-    <string name="tab_item_category">"通讯录"</string>
-    <string name="tab_item_down">"发现"</string>
-    <string name="tab_item_user">"我"</string>
+    <string name="tab_item_home">"测试1"</string>
+    <string name="tab_item_category">"测试2"</string>
+    <string name="tab_item_down">"测试3"</string>
+    <string name="tab_item_user">"测试4"</string>
     <string name="saoyisao">扫一扫</string>
     <string name="souyisou">搜一搜</string>
     <string name="pengyouquan">朋友圈</string>
