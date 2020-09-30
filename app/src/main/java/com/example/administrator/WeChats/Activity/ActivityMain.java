@@ -1,7 +1,7 @@
 package com.example.administrator.WeChats.Activity;
 
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -23,9 +23,8 @@ import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 
 public class ActivityMain extends AppCompatActivity {
 
-    BottomNavigationView bnView;
+    NavigationView navigationView;
     ViewPager viewPager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,7 @@ public class ActivityMain extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getWindow().setFlags(FLAG_FULLSCREEN , FLAG_FULLSCREEN);
 
-        bnView = findViewById(R.id.bottom_nav_view);
+        navigationView = findViewById(R.id.nav_view);
         viewPager = findViewById(R.id.view_pager);
 
         List<Fragment> fragments = new ArrayList<>();
@@ -43,12 +42,12 @@ public class ActivityMain extends AppCompatActivity {
         fragments.add(new FourFragment());
         fragments.add(new FiveFragment());
 
-
         FragmentAdapter adapter = new FragmentAdapter(fragments, getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
 
-        //BottomNavigationView 点击事件监听
-        bnView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        viewPager.setAdapter(adapter);
+//        viewPager.setBackground(getDrawable(R.drawable.background37));
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int menuId = menuItem.getItemId();
@@ -84,7 +83,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onPageSelected(int i) {
                 //将滑动到的页面对应的 menu 设置为选中状态
-                bnView.getMenu().getItem(i).setChecked(true);
+                navigationView.getMenu().getItem(i).setChecked(true);
             }
 
             @Override

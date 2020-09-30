@@ -37,6 +37,7 @@ public class OneFragment extends Fragment {
 
 		views = new ArrayList<>();
 		views.add(viewOne);
+
 		titles = new ArrayList<>();
 		titles.add("引导玩家手机号绑定");
 

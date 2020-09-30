@@ -10,13 +10,15 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author xww
  */
-public class FiveFragment extends Fragment {
+public class FiveFragment extends Fragment implements View.OnClickListener {
 
 	ViewPager viewPager;
 	TabLayout tabLayout;
@@ -63,5 +65,32 @@ public class FiveFragment extends Fragment {
 
 		tabLayout.setupWithViewPager(viewPager);
 		viewPager.setAdapter(adapter);
+//		viewPager.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()){
+			case R.layout.page01:{
+				Toast.makeText(getContext(),"1号客服",Toast.LENGTH_SHORT).show();
+			}break;
+
+			case R.layout.page02:{
+				Toast.makeText(getContext(),"2号客服",Toast.LENGTH_SHORT).show();
+			}break;
+
+			case R.layout.page03:{
+				Toast.makeText(getContext(),"3号客服",Toast.LENGTH_SHORT).show();
+			}break;
+
+			case R.layout.page04:{
+				Toast.makeText(getContext(),"4号客服",Toast.LENGTH_SHORT).show();
+			}break;
+
+			case R.layout.page05:{
+				Toast.makeText(getContext(),"5号客服",Toast.LENGTH_SHORT).show();
+			}break;
+			default:break;
+		}
 	}
 }

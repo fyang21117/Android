@@ -7,17 +7,20 @@
     android:orientation="horizontal"
     tools:context=".Activity.ActivityMain">
 
-        <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bottom_nav_view" />
 
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottom_nav_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+        <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/nav_view" />
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="147dp"
+            android:layout_centerVertical="true"
+
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
             android:background="#fcfcfc"
             app:itemIconTint="@color/colorAccent"
             app:itemTextColor="@color/colorBlack"
