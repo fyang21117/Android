@@ -1,46 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ListView
-        android:id="@+id/talk_view"
-        android:layout_width="wrap_content"
-        android:layout_height="460dp"
-        android:layout_gravity="top">
-    </ListView>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            app:tabSelectedTextColor="#9966cc"
+            app:tabTextColor="#a2c699"
+            android:layout_width="match_parent"
+            android:layout_height="56dp" />
 
-    <fragment
-        android:id="@+id/fragment_wechat"
-        android:name="com.example.administrator.WeChats.Fragment.FragmentWeChat"
-        android:layout_width="match_parent"
-        android:layout_height="0sp"
-        android:layout_weight="1" />
-    <fragment
-        android:id="@+id/fragment_contacts"
-        android:name="com.example.administrator.WeChats.Fragment.FragmentContacts"
-        android:layout_width="match_parent"
-        android:layout_height="0sp"
-        android:layout_weight="1" />
-    <fragment
-        android:id="@+id/fragment_discover"
-        android:name="com.example.administrator.WeChats.Fragment.FragmentDiscover"
-        android:layout_width="match_parent"
-        android:layout_height="0sp"
-        android:layout_weight="1" />
-    <fragment
-        android:id="@+id/fragment_me"
-        android:name="com.example.administrator.WeChats.Fragment.FragmentMe"
-        android:layout_width="match_parent"
-        android:layout_height="0sp"
-        android:layout_weight="1" />
+        <android.support.v4.view.ViewPager
+            android:id="@+id/one_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tab_layout">
 
-    <com.example.administrator.WeChats.ViewIndicator
-        android:id="@+id/indicator"
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </com.example.administrator.WeChats.ViewIndicator>
-
-</LinearLayout>
+        </android.support.v4.view.ViewPager>
+    </RelativeLayout>

@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.administrator.WeChats.R;
 
-public class ActivityLogin extends AppCompatActivity
+public class ActivityLogin extends AppCompatActivity implements View.OnClickListener
 {
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -49,7 +49,10 @@ public class ActivityLogin extends AppCompatActivity
         passwordEdit = findViewById(R.id.password);
         rememberPass = findViewById(R.id.remember_pass);
         Button login = findViewById(R.id.login);
+        Button autoLogin = findViewById(R.id.Autologin);
 
+        login.setOnClickListener(this);
+        autoLogin.setOnClickListener(this);
         boolean isRemember = pref.getBoolean("remember_password",false);
         if(isRemember){
             String account = pref.getString("account","");
@@ -58,9 +61,13 @@ public class ActivityLogin extends AppCompatActivity
             passwordEdit.setText(password);
             rememberPass.setChecked(true);
         }
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.login:{
                 String account = accountEdit.getText().toString();
                 String password = passwordEdit.getText().toString();
                 if(account.equals("fyang") && password.equals("123456") && network_status) {//密码加密！改进
@@ -70,21 +77,27 @@ public class ActivityLogin extends AppCompatActivity
                         editor.putString("account",account);                    //存储键值对
                         editor.putString("password",password);
                     }else
-                         {    editor.clear();   }
+                    {    editor.clear();   }
                     editor.apply();
 
 
-                    Intent login = new Intent(ActivityLogin.this,ActivityWeChat.class);
+                    Intent login = new Intent(ActivityLogin.this, ActivityMain.class);
                     startActivity(login);
                     finish();
                 }
                 else if(!network_status)
-                     { Toast.makeText(ActivityLogin.this,"network is invalid",Toast.LENGTH_SHORT).show(); }
+                { Toast.makeText(ActivityLogin.this,"network is invalid",Toast.LENGTH_SHORT).show(); }
                 else
-                    { Toast.makeText(ActivityLogin.this,"account or password is invalid",Toast.LENGTH_SHORT).show(); }
-            }
-        });
+                { Toast.makeText(ActivityLogin.this,"account or password is invalid",Toast.LENGTH_SHORT).show(); }
+            }break;
+            case R.id.Autologin:{
+                Intent login = new Intent(ActivityLogin.this, ActivityMain.class);
+                startActivity(login);
+            }break;
+            default:break;
+        }
     }
+
     //-------------------------network-------------------------------
     class NetworkChangeReceiver extends BroadcastReceiver
     {

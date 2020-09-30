@@ -17,21 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- android:theme="@style/Theme.AppCompat">       //夜间模式 -->
-        <activity android:name=".Activity.ActivityWeChat">
+        <activity android:name=".Activity.ActivityMain"
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:screenOrientation="sensorLandscape">
         </activity>
-        <activity android:name=".Activity.ActivityTalk">
-        </activity>
-        <activity android:name=".Activity.ActivityContacts" >
-        </activity>
-        <activity android:name=".Activity.ActivityDiscover">
-        </activity>
-        <activity android:name=".Activity.ActivityMe" >
-        </activity>
-        <activity
-            android:name=".Activity.ActivityCircle"
-            android:label="@string/pengyouquan">
-        </activity>
+
         <activity android:name=".Activity.DataActivity"
             android:label="DataActivity">
         </activity>

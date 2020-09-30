@@ -64,4 +64,10 @@
         android:layout_height="60dp"
         android:text="@string/Login"/>
 
+    <Button
+        android:id="@+id/Autologin"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="60dp"
+        android:text="@string/AutoLogin"/>
 </LinearLayout>
