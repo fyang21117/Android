@@ -1,24 +1,21 @@
 package com.example.administrator.WeChats.Activity;
 
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 import com.example.administrator.WeChats.FiveFragment;
 import com.example.administrator.WeChats.FourFragment;
 import com.example.administrator.WeChats.FragmentAdapter;
 import com.example.administrator.WeChats.TwoFragment;
 import com.example.administrator.WeChats.R;
-import com.example.administrator.WeChats.ThreeFragment;
+import com.example.administrator.WeChats.Fragment03.ThreeFragment;
 import com.example.administrator.WeChats.OneFragment;
-
+import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
-
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 
 public class ActivityMain extends AppCompatActivity {

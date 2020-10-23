@@ -2,15 +2,23 @@ package com.example.administrator.WeChats;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+//import android.support.annotation.NonNull;
+//import android.support.annotation.Nullable;
+//import android.support.design.widget.TabLayout;
+//import android.support.v4.app.Fragment;
+//import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +65,12 @@ public class FiveFragment extends Fragment implements View.OnClickListener {
 		titles.add("4号客服");
 		titles.add("5号客服");
 
+		viewOne.setOnClickListener(this);
+		viewTwo.setOnClickListener(this);
+		viewThree.setOnClickListener(this);
+		viewFour.setOnClickListener(this);
+		viewFive.setOnClickListener(this);
+
 		ViewPageAdapter adapter = new ViewPageAdapter(views, titles);
 
 		for (String title : titles) {
@@ -65,17 +79,17 @@ public class FiveFragment extends Fragment implements View.OnClickListener {
 
 		tabLayout.setupWithViewPager(viewPager);
 		viewPager.setAdapter(adapter);
-//		viewPager.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()){
-			case R.layout.page01:{
+			case R.id.page01:{
 				Toast.makeText(getContext(),"1号客服",Toast.LENGTH_SHORT).show();
+				Log.e("测试","1号客服");
 			}break;
 
-			case R.layout.page02:{
+			case R.id.page02:{
 				Toast.makeText(getContext(),"2号客服",Toast.LENGTH_SHORT).show();
 			}break;
 

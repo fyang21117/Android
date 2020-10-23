@@ -2,14 +2,22 @@ package com.example.administrator.WeChats;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+//import android.support.annotation.NonNull;
+//import android.support.annotation.Nullable;
+//import android.support.design.widget.TabLayout;
+//import android.support.v4.app.Fragment;
+//import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +48,6 @@ public class FourFragment extends Fragment {
 		View viewTwo = LayoutInflater.from(view.getContext()).inflate(R.layout.page02, null);
 		View viewThree = LayoutInflater.from(view.getContext()).inflate(R.layout.page03, null);
 		View viewFour = LayoutInflater.from(view.getContext()).inflate(R.layout.page04, null);
-
 
 		views = new ArrayList<>();
 		views.add(viewOne);
