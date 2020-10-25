@@ -73,9 +73,6 @@ public class TwoFragment extends Fragment {
 		webSettings.setJavaScriptEnabled(true);
 		webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 
-
-
-
 		webView02.loadUrl("file:///android_asset/JsOne.html");// 先载入JS代码,格式规定为:file:///android_asset/文件名.html
 		webView02.setWebChromeClient(new WebChromeClient() {
 			@Override
@@ -128,6 +125,7 @@ public class TwoFragment extends Fragment {
 
 		tabLayout.setupWithViewPager(viewPager);
 		viewPager.setAdapter(adapter);
+
 	}
 
 	@Override
@@ -147,4 +145,6 @@ public class TwoFragment extends Fragment {
 		webView02.destroy();
 		webView02 =null;
 	}
+
+
 }

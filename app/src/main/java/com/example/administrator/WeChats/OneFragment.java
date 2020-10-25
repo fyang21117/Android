@@ -23,6 +23,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.administrator.WeChats.WebViewDialog.MyWebView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -57,7 +59,7 @@ public class OneFragment extends Fragment {
 		webView01.setLayoutParams(params);
 //		view.addView(webView);
 //		webView = (WebView) viewOne.findViewById(R.id.webview);
-		showWebView(webView01,"https://baidu.com");//加载apk包中的html页面."file:android_asset/JsOne.html"
+		showWebView(webView01,"http://erg.37.com/index.html");//加载apk包中的html页面."file:android_asset/JsOne.html"
 
 		views = new ArrayList<>();
 		views.add(webView01);

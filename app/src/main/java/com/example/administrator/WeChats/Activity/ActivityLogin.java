@@ -15,7 +15,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.administrator.WeChats.MyWebView;
+
+import com.example.administrator.WeChats.MyDialog.WebViewActivity;
 import com.example.administrator.WeChats.R;
 
 public class ActivityLogin extends AppCompatActivity implements View.OnClickListener
@@ -91,7 +92,7 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
                 { Toast.makeText(ActivityLogin.this,"account or password is invalid",Toast.LENGTH_SHORT).show(); }
             }break;
             case R.id.Autologin:{
-                Intent login = new Intent(ActivityLogin.this, ActivityMain.class);
+                Intent login = new Intent(ActivityLogin.this, WebViewActivity.class);
                 startActivity(login);
             }break;
             default:break;
