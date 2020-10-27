@@ -1,0 +1,33 @@
+
+
+WebView相关部分：
+（1）webview四个对象：
+    WebSettings类\WebViewClient类\WebChromeClient类\WebView类
+
+    demo:OneFragment
+
+（2）支持图库调起、视频播放
+
+    demo:ThreeFragment
+
+（3）前端交互：js调客户端，客户端调js；【https处理】
+对于Android调用JS代码的方法有2种：
+    通过WebView的loadUrl（）
+    通过WebView的evaluateJavascript（）
+对于JS调用Android代码的方法有3种：
+    通过WebView的addJavascriptInterface（）进行对象映射
+    通过 WebViewClient 的shouldOverrideUrlLoading ()方法回调拦截 url
+    通过 WebChromeClient 的onJsAlert()、onJsConfirm()、onJsPrompt（）方法回调拦截JS对话框alert()、confirm()、prompt（） 消息
+
+    demo:TwoFragment
+
+
+（4）性能优化方面：加载速度（缓存）、安全
+初步：
+1、net::ERR_UNKNOWN_URL_SCHEME
+【解决】
+
+2、E/chromium: [ERROR:tile_manager.cc(806)] WARNING: tile memory limits exceeded, some content may not draw
+【解决】
+
+
