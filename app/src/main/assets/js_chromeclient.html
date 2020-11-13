@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 id="h">测试WebChromeClient</h1>
+
+<button onclick="alert('ChromeClient')">alert</button>
+
+<button onclick="confirm('ChromeClient')">confirm</button>
+
+<button onclick="prompt('ChromeClient')">prompt</button>
+
+<button onclick="log()">log</button>
+</body>
+<script type="text/javascript">
+function log(){
+  console.log("测试WebChromeClient.console.log");
+  console.warn("测试WebChromeClient.warnning");
+  console.error("测试WebChromeClient.error");
+}
+</script>
+</html>

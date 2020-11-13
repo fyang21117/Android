@@ -34,7 +34,8 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
         <activity
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:name=".MyDialog.WebViewActivity">
 
         </activity>

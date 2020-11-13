@@ -1,6 +1,7 @@
 package com.example.administrator.WeChats.MyDialog;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -75,6 +76,7 @@ public class WebviewInterface {
 
 	@JavascriptInterface
 	public void copyContent(String text){
+		@SuppressLint("WrongConstant")
 		ClipboardManager clip = (ClipboardManager)mContext.getSystemService("clipboard");
 		clip.setText(text);
 	}

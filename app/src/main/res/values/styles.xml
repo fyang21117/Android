@@ -26,4 +26,10 @@
         <item name="android:windowExitAnimation">@anim/anim_out</item>
     </style>
 
+
+    <!--menu items 间隔设置-->
+    <style name="webBtnStyle" parent="Widget.AppCompat.ActionButton">
+        <item name="android:layout_marginTop">6dp</item>
+    </style>
+
 </resources>

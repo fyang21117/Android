@@ -5,46 +5,37 @@
 <body>
 <h3>测试页面</h3>
 
-
-<input type="button" class="btStyle" style="width:200px; height:40px;" value="关闭窗体" onClick="close()" />
-<input type="button" class="btStyle" style="width:200px; height:40px;"  value="屏蔽返回键" onClick="invalidateBack('true')" />
-<input type="button" class="btStyle" style="width:200px; height:40px;"  value="显示提示" onClick="showTips('提示：通过Js调用了Android的Toast!')" />
+<input type="button" class="btStyle" style="width:200px; height:40px;"  value="关闭窗体"     onClick="close()" />
+<input type="button" class="btStyle" style="width:200px; height:40px;"  value="屏蔽返回键"   onClick="invalidateBack('true')" />
+<input type="button" class="btStyle" style="width:200px; height:40px;"  value="显示提示"     onClick="showTips('提示：通过Js调用了Android的Toast!')" />
 <input type="button" class="btStyle" style="width:200px; height:40px;"  value="调起拨号界面" onClick="call('10086')" />
-<input type="button" class="btStyle" style="width:200px; height:40px;"  value="调起邮箱界面" onClick="callEmail('yf21117@gmail.com','邀请函','万圣节')" />
-<input type="button" class="btStyle" style="width:200px; height:40px;"  value="打开特定App" onClick="openApp('com.android.chrome')" />
-<input type="button" class="btStyle" style="width:200px; height:40px;"  value="复制内容到剪贴板" onClick="copyToClipboard('这是一条来自复制的内容')" />
-<input type="button" class="btStyle" style="width:200px; height:40px;"  value="刷新" onClick="refresh()" />
-
+<input type="button" class="btStyle" style="width:200px; height:40px;"  value="调起邮箱界面" onClick="callEmail('abc123@gmail.com','主题','内容')" />
+<input type="button" class="btStyle" style="width:200px; height:40px;"  value="打开特定App"  onClick="openApp('com.android.chrome')" />
+<input type="button" class="btStyle" style="width:200px; height:40px;"  value="复制内容到剪贴板" onClick="copyToClipboard('这是一条来自复制信息')" />
+<input type="button" class="btStyle" style="width:200px; height:40px;"  value="刷新"         onClick="refresh()" />
 
 <script>
         function close() {
             tools.closeView();
         }
-
         function invalidateBack(value) {
             tools.invalidateAndroidBack(value)
         }
-
         function showTips(msg) {
             tools.showToast(msg);
         }
-
         function call(num) {
             tools.callPhone(num);
         }
-
         function callEmail(addressee,theme,content) {
             tools.callAndroidEmail(addressee,theme,content);
         }
-
         function openApp(pkgName) {
             tools.openAndroidApp(pkgName);
         }
-
         function copyToClipboard(Content) {
             tools.copyContent(Content);
         }
-
         function refresh() {
             tools.refreshView();
         }

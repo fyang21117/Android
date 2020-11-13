@@ -59,7 +59,7 @@ public class OneFragment extends Fragment {
 		webView01.setLayoutParams(params);
 //		view.addView(webView);
 //		webView = (WebView) viewOne.findViewById(R.id.webview);
-		showWebView(webView01,"http://erg.37.com/index.html");//加载apk包中的html页面."file:android_asset/JsOne.html"
+//		showWebView(webView01,"http://erg.37.com/index.html");//加载apk包中的html页面."file:android_asset/JsOne.html"
 
 		views = new ArrayList<>();
 		views.add(webView01);
@@ -217,9 +217,9 @@ public class OneFragment extends Fragment {
 //		webSettings.setPluginsEnabled(true);
 //		webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
 //		webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
-		webSettings.setSupportZoom(true); //支持缩放
-		webSettings.setBuiltInZoomControls(true); //设置内置的缩放控件。若为false，则该WebView不可缩放
-		webSettings.setDisplayZoomControls(true); //隐藏原生的缩放控件
+//		webSettings.setSupportZoom(true); //支持缩放
+//		webSettings.setBuiltInZoomControls(true); //设置内置的缩放控件。若为false，则该WebView不可缩放
+//		webSettings.setDisplayZoomControls(true); //隐藏原生的缩放控件
 
 		webSettings.setAllowFileAccess(true);
 		webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
