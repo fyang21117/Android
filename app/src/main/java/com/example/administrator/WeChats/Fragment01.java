@@ -30,7 +30,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OneFragment extends Fragment {
+public class Fragment01 extends Fragment {
 
 	String TAG = "OneFragment";
 	ViewPager viewPager;

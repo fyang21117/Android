@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment android:name="com.example.administrator.WeChats.OneFragment"
+    <fragment android:name="com.example.administrator.WeChats.Fragment01"
         android:id="@+id/oneFragment"
         android:layout_weight="1"
         android:layout_width="match_parent"
@@ -16,17 +16,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp" />
 
-    <fragment android:name="com.example.administrator.WeChats.OneFragment"
+    <fragment android:name="com.example.administrator.WeChats.Fragment01"
         android:id="@+id/threeFragment"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
-    <fragment android:name="com.example.administrator.WeChats.OneFragment"
+    <fragment android:name="com.example.administrator.WeChats.Fragment01"
         android:id="@+id/list"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
-    <fragment android:name="com.example.administrator.WeChats.OneFragment"
+    <fragment android:name="com.example.administrator.WeChats.Fragment01"
         android:id="@+id/list"
         android:layout_weight="1"
         android:layout_width="match_parent"

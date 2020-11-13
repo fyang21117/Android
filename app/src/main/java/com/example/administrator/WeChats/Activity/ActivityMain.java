@@ -12,7 +12,7 @@ import com.example.administrator.WeChats.FragmentAdapter;
 import com.example.administrator.WeChats.TwoFragment;
 import com.example.administrator.WeChats.R;
 import com.example.administrator.WeChats.Fragment03.ThreeFragment;
-import com.example.administrator.WeChats.OneFragment;
+import com.example.administrator.WeChats.Fragment01;
 import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class ActivityMain extends AppCompatActivity {
         viewPager = findViewById(R.id.view_pager);
 
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new OneFragment());
+        fragments.add(new Fragment01());
         fragments.add(new TwoFragment());
         fragments.add(new ThreeFragment());
         fragments.add(new FourFragment());

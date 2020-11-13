@@ -15,7 +15,6 @@ public  class FragmentAdapter extends FragmentPagerAdapter {
 
 	Fragment fragment4 = new FourFragment();
 	Fragment fragment5 = new FiveFragment();
-
 	public FragmentAdapter(@NonNull FragmentManager fm, int behavior) {
 		super(fm, behavior);
 	}
@@ -24,7 +23,6 @@ public  class FragmentAdapter extends FragmentPagerAdapter {
 		super(fm);
 		this.mFragments = fragments;
 	}
-
 	public FragmentAdapter(FragmentManager fragmentManager){
 		super(fragmentManager);
 //		mFrags.add(fragment4);

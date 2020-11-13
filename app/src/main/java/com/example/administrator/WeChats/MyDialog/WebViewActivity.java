@@ -2,16 +2,13 @@ package com.example.administrator.WeChats.MyDialog;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.utils.widget.MockView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentController;
-import androidx.fragment.app.FragmentHostCallback;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,30 +16,18 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.WeChats.FiveFragment;
 import com.example.administrator.WeChats.FourFragment;
 import com.example.administrator.WeChats.Fragment03.ThreeFragment;
-import com.example.administrator.WeChats.FragmentAdapter;
-import com.example.administrator.WeChats.OneFragment;
-import com.example.administrator.WeChats.R;
-import com.example.administrator.WeChats.TwoFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -50,7 +35,7 @@ import java.util.List;
 
 import static com.example.administrator.WeChats.MyDialog.WebviewInterface.tools;
 
-public class WebViewActivity extends AppCompatActivity {
+public class WebViewActivity extends FragmentActivity {
 
     MockView mockView;
     AlertDialog.Builder builder;
@@ -64,6 +49,17 @@ public class WebViewActivity extends AppCompatActivity {
     public static List<Fragment> fragment;
     public static FragmentManager fm;
     public static FragmentManager fm2;
+
+    @NonNull
+    @Override
+    public FragmentManager getSupportFragmentManager() {
+        return super.getSupportFragmentManager();
+    }
+
+    public FragmentManager MygetChildFragmentManager(Fragment fragment){
+        return fragment.getFragmentManager();
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +69,7 @@ public class WebViewActivity extends AppCompatActivity {
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         networkChangeReceiver = new NetworkChangeReceiver();
         registerReceiver(networkChangeReceiver, intentFilter);
-
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         /**
          * 第一种方式：非dialog实现js调用Android
          * */
@@ -171,7 +167,6 @@ public class WebViewActivity extends AppCompatActivity {
          * 第三种方式：自定义dialog实现js调用Android
          * */
         fm = getSupportFragmentManager() ;
-//        fm2 = getChildFragmentManager();
         fragment = new ArrayList<>();
         fragment.add(new ThreeFragment());
         fragment.add(new FourFragment());
@@ -179,50 +174,53 @@ public class WebViewActivity extends AppCompatActivity {
         dialog = new WebviewDialog(this,fm,fragment);
         dialog.show();
 
+//        MyDialogFragment dialogFragment = new MyDialogFragment();
+//        dialogFragment.show(getSupportFragmentManager(), "dialog");
+
 //        对比显示底层view
-        setContentView(R.layout.activity_webview);
-        final NavigationView navWebview = findViewById(R.id.nav_webview);
-        final ViewPager webviewPager = findViewById(R.id.webview_pager);
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new ThreeFragment());
-        fragments.add(new FourFragment());
-        fragments.add(new FiveFragment());
-        FragmentAdapter adapter = new FragmentAdapter(fragments,fm);
-        webviewPager.setAdapter(adapter);
-        navWebview.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int menuId = menuItem.getItemId();
-                switch (menuId) {
-                    case R.id.webTab0:
-                        webviewPager.setCurrentItem(0);
-                        break;
-                    case R.id.webTab1:
-                        webviewPager.setCurrentItem(1);
-                        break;
-                    case R.id.webTab2:
-                        webviewPager.setCurrentItem(2);
-                        break;
-                }
-                return false;
-            }
-        });
-        webviewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                navWebview.getMenu().getItem(i).setChecked(true);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
+//        setContentView(R.layout.activity_webview);
+//        final NavigationView navWebview = findViewById(R.id.nav_webview);
+//        final ViewPager webviewPager = findViewById(R.id.webview_pager);
+//        List<Fragment> fragments = new ArrayList<>();
+//        fragments.add(new ThreeFragment());
+//        fragments.add(new FourFragment());
+//        fragments.add(new FiveFragment());
+//        FragmentAdapter adapter = new FragmentAdapter(fragments,fm);
+//        webviewPager.setAdapter(adapter);
+//        navWebview.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                int menuId = menuItem.getItemId();
+//                switch (menuId) {
+//                    case R.id.webTab0:
+//                        webviewPager.setCurrentItem(0);
+//                        break;
+//                    case R.id.webTab1:
+//                        webviewPager.setCurrentItem(1);
+//                        break;
+//                    case R.id.webTab2:
+//                        webviewPager.setCurrentItem(2);
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
+//        webviewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int i, float v, int i1) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int i) {
+//                navWebview.getMenu().getItem(i).setChecked(true);
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int i) {
+//
+//            }
+//        });
 
 
         /**

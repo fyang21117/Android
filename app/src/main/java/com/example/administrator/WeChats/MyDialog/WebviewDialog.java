@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -28,6 +29,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -62,7 +64,7 @@ public class WebviewDialog extends Dialog {
 		webViewFM = fm;
 		webViewFragment = fragments;
 	}
-	float screenPercent = 0.9f;
+	float screenPercent = 0.7f;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +73,14 @@ public class WebviewDialog extends Dialog {
 		LinearLayout.LayoutParams webviewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		mWebView = new WebView(getContext());
 		mWebView.setLayoutParams(webviewParams);
-//		String urls = "https://zzcool.com/hd/20200612_wonderful/?screen_type=1&popup_template=https://imgcs.s98s2.com/common/1590137250phpnuTcyi.png&close_button=https://imgcs.s98s2.com/common/1590137255phpGxIoK2.png&popup_background=https://imgcs.s98s2.com/common/1590137250phpnuTcyi.png";
-//		showWebView(mWebView,urls);
+		String urls = "https://zzcool.com/hd/20200612_wonderful/?screen_type=1&popup_template=https://imgcs.s98s2.com/common/1590137250phpnuTcyi.png&close_button=https://imgcs.s98s2.com/common/1590137255phpGxIoK2.png&popup_background=https://imgcs.s98s2.com/common/1590137250phpnuTcyi.png";
+		showWebView(mWebView,urls);
 //		showWebView(mWebView,"https://zzcool.com/hd/20200612_wonderful/?screen_type=1&popup_template=https://imgcs.s98s2.com/common/1590137250phpnuTcyi.png&close_button=https://imgcs.s98s2.com/common/1590137255phpGxIoK2.png&popup_background=https://imgcs.s98s2.com/common/1590137250phpnuTcyi.png&popup_background=https://imgcs.s98s2.com/common/1590137255phpGxIoK2.png");
 //		showWebView(mWebView,"https://www.baidu.com/");
-//		showWebView(mWebView,"file:///android_asset/javascript.html");
+//		showWebView(mWebView,"file:///android_asset/JsTwo.html");
 
 		//测试webchromeclient
-//		showWebView(mWebView,"file:///android_asset/js_chromeclient.html");
+		showWebView(mWebView,"file:///android_asset/js_chromeclient.html");
 //		showWebView(mWebView,"file:///android_asset/JsThree.html");
 
 
@@ -107,7 +109,7 @@ public class WebviewDialog extends Dialog {
 		webviewPager = viewGroup.getRootView().findViewById(R.id.webview_pager);
 //		webProgress = viewGroup.getRootView().findViewById(R.id.webProgress);
 
-		//需要在父布局先清除，才能添加到本布局中。
+		//动态添加可能遇到已有父布局，需要先脱离，才能添加到本布局中。
 		if(webviewPager != null){
 			ViewGroup pagerParent = (ViewGroup) webviewPager.getParent();
 			if(pagerParent != null){
@@ -127,9 +129,9 @@ public class WebviewDialog extends Dialog {
 		webviewPager.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 
-//		viewGroup.addView(mWebView);
+		viewGroup.addView(mWebView);
 		viewGroup.addView(navWebview);
-		viewGroup.addView(webviewPager);
+//		viewGroup.addView(webviewPager);
 		viewGroup.addView(imageView);
 
 		openListeners();
@@ -245,8 +247,8 @@ public class WebviewDialog extends Dialog {
 ////					Log.e("测试", "加载完成，倒计时结束:"+newProgress);
 ////				}
 //			}
-//
-//
+
+
 //			@Override
 //			public void onReceivedTitle(WebView view, String title) {
 //			}
