@@ -1,4 +1,4 @@
-package com.example.administrator.WeChats.MyDialog;
+package com.example.administrator.WeChats.demo;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -29,8 +28,6 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.administrator.WeChats.FragmentAdapter;
@@ -43,8 +40,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.administrator.WeChats.MyDialog.WebViewActivity.dialog;
-import static com.example.administrator.WeChats.MyDialog.WebviewInterface.tools;
+import static com.example.administrator.WeChats.demo.WebActivity.dialog;
+import static com.example.administrator.WeChats.demo.WebviewInterface.tools;
 
 public class WebviewDialog extends Dialog {
 

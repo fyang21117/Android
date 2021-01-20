@@ -1,4 +1,4 @@
-package com.example.administrator.WeChats.MyDialog;
+package com.example.administrator.WeChats.demo;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -10,12 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-
-import com.example.administrator.WeChats.R;
-
-import java.util.Objects;
 
 public class MyDialogFragment extends DialogFragment {
 

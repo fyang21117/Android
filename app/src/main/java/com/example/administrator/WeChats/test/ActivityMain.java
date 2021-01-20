@@ -1,4 +1,4 @@
-package com.example.administrator.WeChats.Activity;
+package com.example.administrator.WeChats.test;
 
 import android.os.Bundle;
 import android.view.MenuItem;

@@ -30,37 +30,26 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/wc_launcher_circle"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
         <activity
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:name=".MyDialog.WebViewActivity">
-
+            android:name=".demo.WebActivity">
         </activity>
         <activity
-            android:name=".Activity.FullscreenActivity"
+            android:name=".test.FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_fullscreen"
-            android:theme="@style/FullscreenTheme" />
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
+            android:label="@string/title_activity_fullscreen"/>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".Activity.ActivityMain"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/Theme.Design.NoActionBar" />
-        <activity android:name=".Activity.ActivityLogin">
+            android:name=".test.ActivityMain"
+            android:screenOrientation="sensorLandscape"/>
+
+        <activity android:name=".test.ActivityLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

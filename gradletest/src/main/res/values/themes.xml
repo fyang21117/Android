@@ -1,0 +1,4 @@
+<resources>
+
+    <style name="Theme.WeChats" parent="Theme.MaterialComponents.Light" />
+</resources>

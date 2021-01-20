@@ -26,9 +26,5 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
-    <fragment android:name="com.example.administrator.WeChats.Fragment01"
-        android:id="@+id/list"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
+
 </LinearLayout>

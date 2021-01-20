@@ -26,3 +26,50 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+//设定公共参数部分
+ext {
+    appName = "gradleTest"
+}
+//执行阶段结束后的回调监听，操作个别文件
+this.gradle.buildFinished {
+    println '执行阶段结束'
+    def newPath = getRootProject().getProjectDir().path + '/APPBUILD/'
+    def srcPath = '/app/build/outputs/apk/debug/app-debug.apk'
+    def desPath = getRootProject().getProjectDir().path + '/APPBUILD/'
+    fileTree(srcPath){ FileTree fileTree ->
+        fileTree.visit { FileTreeElement fileTreeElement ->
+            copy {
+                from fileTreeElement.file
+                //build目录下可能被清除
+//                into getRootProject().getBuildDir().path + '/COPY/'
+                into desPath
+                rename{
+                    "${appName}.apk"
+                }
+            }
+        }
+    }
+}
+
+//挂靠到prebuild的生命周期之前
+task repalceIconTask {
+    doFirst {
+        def srcPath = '/app/src/AndroidManifest.xml'
+
+
+    }
+}
+
+
+
+
+
+//根據gradle.properties的配置選擇是否替換icon等
+if (Boolean.valueOf(project.property('isReplaceIcon') == null ? false : project.property('isReplaceIcon').toString())) {
+    //xxx
+    println "配置參數值為："+Boolean.valueOf(project.property('isReplaceIcon'))
+} else {
+    //xxx
+    println "isReplaceIcon=false"
+}

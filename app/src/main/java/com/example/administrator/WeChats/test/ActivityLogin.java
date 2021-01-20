@@ -1,5 +1,6 @@
-package com.example.administrator.WeChats.Activity;
+package com.example.administrator.WeChats.test;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,10 +17,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.administrator.WeChats.MyDialog.WebViewActivity;
+import com.example.administrator.WeChats.demo.WebActivity;
 import com.example.administrator.WeChats.R;
 
-public class ActivityLogin extends AppCompatActivity implements View.OnClickListener
+public class ActivityLogin extends Activity implements View.OnClickListener
 {
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -92,7 +93,7 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
                 { Toast.makeText(ActivityLogin.this,"account or password is invalid",Toast.LENGTH_SHORT).show(); }
             }break;
             case R.id.Autologin:{
-                Intent login = new Intent(ActivityLogin.this, WebViewActivity.class);
+                Intent login = new Intent(ActivityLogin.this, WebActivity.class);
                 startActivity(login);
             }break;
             default:break;

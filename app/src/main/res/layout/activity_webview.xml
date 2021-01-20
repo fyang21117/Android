@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:background="#fcfcfc"
-    tools:context=".MyDialog.WebViewActivity">
+    tools:context=".demo.WebActivity">
 
   <androidx.viewpager.widget.ViewPager
       android:id="@+id/webview_pager"

@@ -1,4 +1,4 @@
-package com.example.administrator.WeChats.MyDialog;
+package com.example.administrator.WeChats.demo;
 
 import android.content.Context;
 import android.content.DialogInterface;

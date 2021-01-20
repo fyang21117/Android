@@ -1,4 +1,4 @@
-package com.example.administrator.WeChats.MyDialog;
+package com.example.administrator.WeChats.demo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -18,24 +19,23 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.example.administrator.WeChats.FiveFragment;
-import com.example.administrator.WeChats.FourFragment;
-import com.example.administrator.WeChats.Fragment03.ThreeFragment;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.administrator.WeChats.MyDialog.WebviewInterface.tools;
+import static com.example.administrator.WeChats.demo.WebviewInterface.tools;
 
-public class WebViewActivity extends FragmentActivity {
+public class WebActivity extends FragmentActivity {
 
     MockView mockView;
     AlertDialog.Builder builder;
@@ -64,6 +64,8 @@ public class WebViewActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toast.makeText(this, "初始化失败: ", Toast.LENGTH_SHORT).show();
+
         //网络监听
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -148,31 +150,38 @@ public class WebViewActivity extends FragmentActivity {
          * */
 //        setContentView(R.layout.activity_webview);
         //主活动创建方式
-//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);//
-//        WebView mWebView = new WebView(getApplicationContext());
-//        mWebView.setLayoutParams(params);
-//        showWebView(mWebView,"file:///android_asset/javascript.html");
-//
-//        builder = new AlertDialog.Builder(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);//
+        WebView mWebView = new WebView(getApplicationContext());
+        mWebView.setLayoutParams(params);
+        showWebView(mWebView,"file:///android_asset/javascript.html");
+
+        builder = new AlertDialog.Builder(this);
 //        builder.setView(mWebView);
-//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.cancel();
-//            }
-//        }).show();
+        builder.setTitle("应用需要适配系统风格");
+        builder.setMessage("像弹出的Dialog、Loading框，需要适配系统风格；");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        }).show();
 
         //自定义dialog实现
 
         /**
          * 第三种方式：自定义dialog实现js调用Android
          * */
-        fm = getSupportFragmentManager() ;
-        fragment = new ArrayList<>();
-        fragment.add(new ThreeFragment());
-        fragment.add(new FourFragment());
-        fragment.add(new FiveFragment());
-        dialog = new WebviewDialog(this,fm,fragment);
-        dialog.show();
+//        fm = getSupportFragmentManager() ;
+//        fragment = new ArrayList<>();
+//        fragment.add(new ThreeFragment());
+//        fragment.add(new FourFragment());
+//        fragment.add(new FiveFragment());
+//        dialog = new WebviewDialog(this,fm,fragment);
+//        dialog.show();
 
 //        MyDialogFragment dialogFragment = new MyDialogFragment();
 //        dialogFragment.show(getSupportFragmentManager(), "dialog");

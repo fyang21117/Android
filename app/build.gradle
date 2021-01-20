@@ -52,3 +52,63 @@ dependencies {
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 }
+
+task helloTask {
+    println 'I Am Called !'
+}
+
+//计算build执行时长
+//def startBuildTime,endBuildTime
+//this.afterEvaluate { Project project ->
+//    //保证要找的task已经配置完毕,注意：prebuild是在Android工程里面有
+//    def preBuildTask = project.tasks.getByName('preBuild')
+//    preBuildTask.doFirst {
+//        startBuildTime = System.currentTimeMillis()
+//        println 'the start time is ' + startBuildTime
+//    }
+//
+//    def buildTask = project.tasks.getByName('build')
+//    buildTask.doLast {
+//        endBuildTime = System.currentTimeMillis()
+//        println "the end time is ${endBuildTime - startBuildTime}"
+//    }
+//}
+
+this.afterEvaluate {
+    def manifestFile = "${projectDir}/src/main/AndroidManifest.xml"
+    def manifest = file(manifestFile).getText()
+    def xml = new XmlParser().parseText(manifest)
+//    def xml = file(manifestFile)
+//    def manifest = new XmlSlurper().parse(manifestFile)
+    def application = xml.application
+
+    application.activity.each {
+        def isFind = false
+        it.children().each{
+            if(it.name()=="application" &&
+                    it.@"android:icon" !=null){
+                it.@"android:icon" = "@drawable/ic_sy"
+                isFind = true
+                return true
+            }
+        }
+
+//        it.children().each {
+//            if(it.name() == "application"){
+//            }
+//            if(isFind){
+//                return  true
+//            }
+//        }
+
+        if (isFind){
+            it.@"android:name" = "New Activity"
+            return true
+        }
+    }
+//    xml.withWriter {out->
+//        XmlUtil.serialize(manifest, out)
+//    }
+    def serialize = XmlUtil.serialize(xml)
+    file(manifestPath).write(serialize)
+}
